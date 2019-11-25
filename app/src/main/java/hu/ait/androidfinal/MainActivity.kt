@@ -5,7 +5,7 @@ import android.os.Bundle
 
 class MainActivity : AppCompatActivity() {
 
-    var test = "testing"
+    var test = "garbage"
 
     var test0 = "shithub"
     override fun onCreate(savedInstanceState: Bundle?) {
