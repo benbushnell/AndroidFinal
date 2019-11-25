@@ -7,7 +7,7 @@ class MainActivity : AppCompatActivity() {
 
     var test = "testing"
 
-    var bentest = "shithub"
+    var test0 = "shithub"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
