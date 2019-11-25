@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "877838167122",
+    "firebase_url": "https://aitfinal-33c70.firebaseio.com",
+    "project_id": "aitfinal-33c70",
+    "storage_bucket": "aitfinal-33c70.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:877838167122:android:c60cbec7ff6a4c7e09438b",
+        "android_client_info": {
+          "package_name": "hu.ait.androidfinal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "877838167122-kf8o2fpa7ino7n0d8l8cbnb3v1njtjne.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTLYPapPmZXTED6e6cIOcFk_e1h__WvtI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "877838167122-kf8o2fpa7ino7n0d8l8cbnb3v1njtjne.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
