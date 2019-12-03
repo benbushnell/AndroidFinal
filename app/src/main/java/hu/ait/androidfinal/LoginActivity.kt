@@ -43,6 +43,9 @@ class LoginActivity : AppCompatActivity() {
         if (requestCode == 100){
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show()
+            val loginIntent = Intent()
+            loginIntent.setClass(this, MainActivity::class.java )
+            startActivity(loginIntent)
         }
     }
 }
