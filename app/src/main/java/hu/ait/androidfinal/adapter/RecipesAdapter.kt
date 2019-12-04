@@ -1,4 +1,4 @@
-package hu.ait.androidfinal.adaptor
+package hu.ait.androidfinal.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import hu.ait.androidfinal.R
 import hu.ait.androidfinal.data.Recipe
 import kotlinx.android.synthetic.main.recipe_list_item.view.*
 
-class RecipesAdaptor : RecyclerView.Adapter<RecipesAdaptor.ViewHolder> {
+class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
 
     var recipesList = mutableListOf<Recipe>()
     var context : Context
@@ -22,7 +22,7 @@ class RecipesAdaptor : RecyclerView.Adapter<RecipesAdaptor.ViewHolder> {
         recipesList.addAll(listRecipes)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipesAdaptor.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipesAdapter.ViewHolder {
         val recipeItemCard = LayoutInflater.from(context).inflate(
             R.layout.recipe_list_item, parent, false
         )

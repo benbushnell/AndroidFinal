@@ -6,8 +6,7 @@ import retrofit2.Retrofit
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import com.bumptech.glide.Glide
-import hu.ait.androidfinal.adaptor.RecipesAdaptor
+import hu.ait.androidfinal.adapter.RecipesAdapter
 import hu.ait.androidfinal.data.Recipe
 import hu.ait.androidfinal.data.RecipeAPI
 import kotlinx.android.synthetic.main.activity_main.*
@@ -21,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     val spoonUrl = "https://api.spoonacular.com"
     val apiKey = "8c09193246b84f0e853467ad32076f8c"
-    lateinit var recipeAdaptor : RecipesAdaptor
+    lateinit var recipeAdaptor : RecipesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView(){
-        recipeAdaptor = RecipesAdaptor(this, mutableListOf())
+        recipeAdaptor = RecipesAdapter(this, mutableListOf())
         recyclerRecipes.adapter = recipeAdaptor
     }
 }
