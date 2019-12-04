@@ -1,6 +1,5 @@
 package hu.ait.androidfinal
 
-import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import retrofit2.Retrofit
 import android.os.Bundle
@@ -10,7 +9,6 @@ import hu.ait.androidfinal.adapter.RecipesAdapter
 import hu.ait.androidfinal.data.Recipe
 import hu.ait.androidfinal.data.RecipeAPI
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.recipe_list_item.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     val spoonUrl = "https://api.spoonacular.com"
     val apiKey = "8c09193246b84f0e853467ad32076f8c"
-    lateinit var recipeAdaptor : RecipesAdapter
+    lateinit var recipeAdapter : RecipesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onResponse(call: Call<Recipe>, response: Response<Recipe>) {
-                    recipeAdaptor.addRecipe(response.body()!!)
+                    recipeAdapter.addRecipe(response.body()!!)
                     Toast.makeText(this@MainActivity, "${response.body()}", Toast.LENGTH_SHORT).show()
                     Log.d("response", randomRecipe.toString())
                     Log.d("response", call.toString())
@@ -55,7 +53,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView(){
-        recipeAdaptor = RecipesAdapter(this, mutableListOf())
-        recyclerRecipes.adapter = recipeAdaptor
+        recipeAdapter = RecipesAdapter(this, mutableListOf())
+        recyclerRecipes.adapter = recipeAdapter
     }
 }
