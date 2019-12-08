@@ -6,11 +6,10 @@ import retrofit2.http.Query
 
 interface RecipeAPI{
 
-    //https://api.spoonacular.com/recipes/random?number=1&apiKey=8c09193246b84f0e853467ad32076f8c
+    //https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata
 
-    @GET("/recipes/random")
-    fun getRandomRecipes(
-        @Query("number") number: String,
-        @Query("apiKey") apiKey: String
-    ): Call<Recipe>
+    @GET("api/json/v1/1/search.php")
+    fun searchMealName(
+        @Query("s") field: String
+    ): Call<Base>
 }

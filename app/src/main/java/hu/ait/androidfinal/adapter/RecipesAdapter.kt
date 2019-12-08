@@ -8,15 +8,16 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import hu.ait.androidfinal.MainActivity
 import hu.ait.androidfinal.R
-import hu.ait.androidfinal.data.Recipe
+import hu.ait.androidfinal.data.Base
+import hu.ait.androidfinal.data.Meals
 import kotlinx.android.synthetic.main.recipe_list_item.view.*
 
 class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
 
-    var recipesList = mutableListOf<Recipe>()
+    var recipesList = mutableListOf<Meals>()
     var context : Context
 
-    constructor(context: Context, listRecipes: List<Recipe>){
+    constructor(context: Context, listRecipes: List<Meals>){
         this.context = context
 
         recipesList.addAll(listRecipes)
@@ -37,14 +38,14 @@ class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recipeItem = recipesList[position]
 
-        holder.tvRecipeName.text = recipeItem.extendedIngredients?.get(0)?.name
+        holder.tvRecipeName.text = recipeItem.strMeal
 
         holder.wholeCard.setOnClickListener {
             Toast.makeText((context as MainActivity), "Opened ${holder.tvRecipeName.text}", Toast.LENGTH_LONG).show()
         }
     }
 
-    fun addRecipe(recipe: Recipe){
+    fun addRecipe(recipe: Meals){
         recipesList.add(recipe)
         notifyItemInserted(recipesList.lastIndex)
     }
