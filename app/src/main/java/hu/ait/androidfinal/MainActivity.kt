@@ -13,7 +13,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.converter.gson.GsonConverterFactory
-//https://api.spoonacular.com/recipes/random?number=1&apiKey=8c09193246b84f0e853467ad32076f8c
+
 class MainActivity : AppCompatActivity() {
 
     val spoonUrl = "https://api.spoonacular.com"
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<Recipe>, t: Throwable) {
                     //tvRecipeName.text = t.message
                     Toast.makeText(this@MainActivity, t.message, Toast.LENGTH_SHORT).show()
-                    Log.d("response", t.message)
+                    Log.d("response", t.message!!)
                 }
 
                 override fun onResponse(call: Call<Recipe>, response: Response<Recipe>) {
