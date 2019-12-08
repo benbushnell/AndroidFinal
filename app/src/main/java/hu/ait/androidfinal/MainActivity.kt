@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         var i = 0
         while (i < 4) {
             //val recipeSearch = recipeAPI.searchByMainIngredient("chicken_breast")
-            val recipeGet = recipeAPI.getRecipyById(recipeIdList[i])
+            val recipeGet = recipeAPI.getRecipeById(recipeIdList[i])
             recipeGet.enqueue(object : Callback<Base> {
                 override fun onFailure(call: Call<Base>, t: Throwable) {
                     //tvRecipeName.text = t.message

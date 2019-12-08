@@ -21,7 +21,7 @@ interface RecipeAPI{
 
     //https://www.themealdb.com/api/json/v2/9973533/lookup.php?i=52779
     @GET("api/json/v2/9973533/lookup.php")
-    fun getRecipyById(
+    fun getRecipeById(
         @Query("i") field: String
     ): Call<Base>
 }
