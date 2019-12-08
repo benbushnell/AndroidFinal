@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 import hu.ait.androidfinal.MainActivity
 import hu.ait.androidfinal.R
 import hu.ait.androidfinal.data.Base
@@ -16,6 +18,8 @@ class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
 
     var recipesList = mutableListOf<Meals>()
     var context : Context
+
+
 
     constructor(context: Context, listRecipes: List<Meals>){
         this.context = context
@@ -43,6 +47,8 @@ class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
         holder.wholeCard.setOnClickListener {
             Toast.makeText((context as MainActivity), "Opened ${holder.tvRecipeName.text}", Toast.LENGTH_LONG).show()
         }
+
+        Picasso.get().load(recipesList[position].strMealThumb).into(holder.imgRecipe)
     }
 
     fun addRecipe(recipe: Meals){
@@ -53,6 +59,7 @@ class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val tvRecipeName = itemView.tvRecipeName
         val wholeCard = itemView.wholeCard
+        val imgRecipe = itemView.imgRecipe
 
     }
 
