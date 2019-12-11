@@ -59,3 +59,12 @@ data class Meal(
     val strSource: String?,
     val dateModified: Any?
 ) : Serializable
+//{
+//    fun getFieldValue(fieldName : String) {
+//        this::class.members.forEach {
+//            if (it.name == fieldName) {
+//                return it.call()
+//            }
+//        }
+//    }
+//}
