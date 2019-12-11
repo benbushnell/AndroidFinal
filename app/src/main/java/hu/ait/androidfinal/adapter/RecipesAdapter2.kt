@@ -12,20 +12,15 @@ import hu.ait.androidfinal.R
 import hu.ait.androidfinal.data.Meal
 import kotlinx.android.synthetic.main.recipe_list_item.view.*
 
-class RecipesAdapter2 :RecyclerView.Adapter<RecipesAdapter2.RecipeViewHolder> {
+class RecipesAdapter2(val listRecipes : List<Meal> ) :RecyclerView.Adapter<RecipesAdapter2.RecipeViewHolder>() {
 
-    var recipesList = mutableListOf<Meal>()
-    var context : Context
-
-    constructor(context: Context, listRecipes: List<Meal>){
-        this.context = context
-
-        recipesList.addAll(listRecipes)
-    }
+    val recipesList = mutableListOf<Meal>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
-        val recipeItemCard = LayoutInflater.from(context).inflate(
+        val recipeItemCard = LayoutInflater.from(parent.context).inflate(
             R.layout.recipe_list_item, parent, false
         )
+
+        recipesList.addAll(listRecipes)
 
         return RecipeViewHolder(recipeItemCard)
     }
@@ -40,7 +35,6 @@ class RecipesAdapter2 :RecyclerView.Adapter<RecipesAdapter2.RecipeViewHolder> {
         holder.tvRecipeName.text = recipeItem.strMeal
 
         holder.wholeCard.setOnClickListener {
-            Toast.makeText((context as MainActivity), "Opened ${holder.tvRecipeName.text}", Toast.LENGTH_LONG).show()
         }
 
         Picasso.get().load(recipesList[position].strMealThumb).into(holder.imgRecipe)

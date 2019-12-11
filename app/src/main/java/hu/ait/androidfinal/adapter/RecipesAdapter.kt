@@ -13,23 +13,17 @@ import hu.ait.androidfinal.R
 import hu.ait.androidfinal.data.Meal
 import kotlinx.android.synthetic.main.recipe_list_item.view.*
 
-class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
-
+class RecipesAdapter(context: Context) : RecyclerView.Adapter<RecipesAdapter.ViewHolder>() {
+    val context = context
     var recipesList = mutableListOf<Meal>()
-    var context : Context
 
-
-
-    constructor(context: Context, listRecipes: List<Meal>){
-        this.context = context
-
-        recipesList.addAll(listRecipes)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipesAdapter.ViewHolder {
         val recipeItemCard = LayoutInflater.from(context).inflate(
             R.layout.recipe_list_item, parent, false
         )
+
+        val recipeList = mutableListOf<Meal>()
 
         return ViewHolder(recipeItemCard)
     }
@@ -53,6 +47,11 @@ class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
     fun addRecipe(recipe: Meal){
         recipesList.add(recipe)
         notifyItemInserted(recipesList.lastIndex)
+    }
+
+    fun replaceItems(recipes: MutableList<Meal>) {
+        this.recipesList = recipes
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){

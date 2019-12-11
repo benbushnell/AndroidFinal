@@ -23,56 +23,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initRecyclerView()
-
-        layoutRefresh.setOnRefreshListener {
-            getRandomRecipes()
-        }
-
-        getRandomRecipes()
 
         val db = FirebaseFirestore.getInstance()
 
     }
 
-    private fun  getRandomRecipes(){
-        layoutRefresh.isRefreshing = true
-        val recipeIdList = mutableListOf("52903", "52831", "52945", "52813")
-        var i = 0
-        while (i < 4) {
-            //val recipeSearch = recipeAPI.searchByMainIngredient("chicken_breast")
-            val recipeGet = RecipeAPI().getRecipeById(recipeIdList[i])
-            recipeGet.enqueue(object : Callback<Base> {
-                override fun onFailure(call: Call< Base>, t: Throwable) {
-                    //tvRecipeName.text = t.message
-                    layoutRefresh.isRefreshing = false
-                    Toast.makeText(this@MainActivity, t.message, Toast.LENGTH_SHORT).show()
-                    Log.d("response", t.message!!)
-                }
-
-                override fun onResponse(call: Call<Base>, response: Response<Base>) {
-                    layoutRefresh.isRefreshing = false
-                    Log.d("response", response.body().toString())
-
-                    val recipeResponses = response.body()
-
-                    recipeResponses?.let{
-                        recipeAdapter.addRecipe(recipeResponses.meals[0])
-                    }
-                    // Toast.makeText(this@MainActivity, "${response.body()}", Toast.LENGTH_SHORT).show()
-                    //Log.d("response", recipeGet.toString())
-                    Log.d("response", call.toString())
-                    Log.d("response", response.toString())
-                    Log.d("response", response.body().toString())
-                }
-            })
-            i++
-        }
-    }
-
-    private fun initRecyclerView(){
-        recipeAdapter = RecipesAdapter(this, mutableListOf())
-        recyclerRecipes.adapter = recipeAdapter
-        recyclerRecipes.layoutManager = GridLayoutManager(this, 2)
-    }
 }
