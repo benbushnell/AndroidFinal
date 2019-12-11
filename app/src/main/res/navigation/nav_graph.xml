@@ -10,4 +10,11 @@
         android:name="hu.ait.androidfinal.fragments.FavoritesFragment"
         android:label="recipe_list_fragment"
         tools:layout="@layout/favorites_fragment" />
+
+    <fragment
+        android:id="@+id/recipeDetailsFragment"
+        android:name="hu.ait.androidfinal.RecipeDetailsActivity"
+        android:label="recipe_details_fragment"
+        tools:layout="@layout/recipe_details"/>
+
 </navigation>
