@@ -1,8 +1,10 @@
 package hu.ait.androidfinal.data
 
+import java.io.Serializable
+
 // result generated from /json
 
-data class Base(val meals: List<Meal>) //i took the question mark off Meals
+data class Base(val meals: List<Meal>) : Serializable //i took the question mark off Meals
 
 data class Meal(
     val idMeal: String?,
@@ -56,4 +58,4 @@ data class Meal(
     val strMeasure20: String?,
     val strSource: String?,
     val dateModified: Any?
-)
+) : Serializable

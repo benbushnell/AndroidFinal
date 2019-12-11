@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.viewpager.widget.PagerAdapter
 import com.google.firebase.firestore.FirebaseFirestore
 import hu.ait.androidfinal.adapter.RecipesAdapter
+import hu.ait.androidfinal.adapter.RecipesPagerAdapter
 import hu.ait.androidfinal.api.RecipeAPI
 import hu.ait.androidfinal.data.Base
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,6 +25,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        viewpager.adapter = RecipesPagerAdapter(supportFragmentManager)
+
 
         val db = FirebaseFirestore.getInstance()
 
