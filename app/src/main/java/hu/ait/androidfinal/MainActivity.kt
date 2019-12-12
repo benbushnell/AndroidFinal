@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import com.google.firebase.firestore.FirebaseFirestore
 import hu.ait.androidfinal.adapter.FavoritesAdapter
-import hu.ait.androidfinal.adapter.RecipesAdapter
 import hu.ait.androidfinal.adapter.RecipesPagerAdapter
 import hu.ait.androidfinal.api.RecipeAPI
 import hu.ait.androidfinal.data.Base
