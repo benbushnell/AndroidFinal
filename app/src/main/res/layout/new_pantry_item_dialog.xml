@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:text="Ingredient Name"
+        android:hint="Ingredient Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="number"
-        android:text="Quantity"
+        android:hint="Quantity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/etNewItemName" />

@@ -47,8 +47,10 @@ class FavoritesFragment : Fragment() {
         })
 
         layoutRefresh.setOnRefreshListener {
+            layoutRefresh.isRefreshing = true
             viewModel.getSavedFavorites().observe(this, Observer {savedFavorites -> favoritesAdapter.replaceItems(savedFavorites)
             })
+            layoutRefresh.isRefreshing = false
         }
 
         btnAddFav.setOnClickListener {

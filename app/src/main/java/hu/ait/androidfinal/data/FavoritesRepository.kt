@@ -7,7 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class FavoritesRepository {
 
-    val TAG = "FAVORIRES_RESPOSITORY"
+    val TAG = "FAVORITES_RESPOSITORY"
     var firestoreDB = FirebaseFirestore.getInstance()
     var user = FirebaseAuth.getInstance().currentUser
     val baseUserPath = firestoreDB.collection("users").document(user!!.uid).collection("favorites")
