@@ -1,4 +1,4 @@
-package hu.ait.androidfinal.dialogs
+package hu.ait.androidfinal.fragments
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -9,12 +9,12 @@ import android.widget.Spinner
 import androidx.fragment.app.DialogFragment
 import hu.ait.androidfinal.R
 import hu.ait.androidfinal.data.Ingredient
-import kotlinx.android.synthetic.main.new_pantry_item_dialog.*
 import kotlinx.android.synthetic.main.new_pantry_item_dialog.view.*
 import kotlinx.android.synthetic.main.new_pantry_item_dialog.view.spinnerUnit
 import java.lang.RuntimeException
 
 class NewPantryItemDialog : DialogFragment() {
+
 
     interface ItemHandler {
         fun itemCreated(pantryItem: Ingredient)

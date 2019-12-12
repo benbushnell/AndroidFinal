@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentPagerAdapter
 import hu.ait.androidfinal.fragments.FavoritesFragment
 import hu.ait.androidfinal.fragments.PantryFragment
 
-
 class RecipesPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm){
     override fun getItem(position: Int): Fragment {
         return if (position == 0){
