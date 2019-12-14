@@ -22,8 +22,8 @@ import retrofit2.Response
 
 class FavoritesFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = FavoritesFragment()
+    companion object{
+        const val TAG = "FavoritesFragment"
     }
 
     private lateinit var viewModel: RecipeViewModel
@@ -34,7 +34,8 @@ class FavoritesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.favorites_fragment, container, false)
+        val rootView =  inflater.inflate(R.layout.favorites_fragment, container, false)
+        return rootView
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

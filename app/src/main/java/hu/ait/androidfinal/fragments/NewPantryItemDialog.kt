@@ -15,6 +15,9 @@ import java.lang.RuntimeException
 
 class NewPantryItemDialog : DialogFragment() {
 
+    companion object {
+        const val TAG_ITEM_DIALOG = "TAG_ITEM_DIALOG"
+    }
 
     interface ItemHandler {
         fun itemCreated(pantryItem: Ingredient)
