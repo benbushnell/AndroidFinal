@@ -46,6 +46,7 @@ class PantryAdapter(context: Context) : RecyclerView.Adapter<PantryAdapter.ViewH
             1 -> return "Protein"
             2 -> return "Carb"
             3 -> return "Vegetable"
+            4 -> return "Staple"
             else -> return "Fruit"
         }
     }

@@ -16,15 +16,19 @@ import hu.ait.androidfinal.adapter.FavoritesAdapter
 import hu.ait.androidfinal.api.RecipeAPI
 import hu.ait.androidfinal.data.Base
 import kotlinx.android.synthetic.main.favorites_fragment.*
+import kotlinx.android.synthetic.main.recipe_list_item.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class FavoritesFragment : Fragment() {
 
-    companion object{
+    companion object {
+        fun newInstance() = FavoritesFragment()
         const val TAG = "FavoritesFragment"
     }
+
+
 
     private lateinit var viewModel: RecipeViewModel
 
@@ -34,8 +38,7 @@ class FavoritesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView =  inflater.inflate(R.layout.favorites_fragment, container, false)
-        return rootView
+        return inflater.inflate(R.layout.favorites_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

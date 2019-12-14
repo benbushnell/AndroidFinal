@@ -19,7 +19,7 @@ class RecipeDetails : AppCompatActivity() {
 
         recipe = intent.extras?.get("Recipe") as Meal
 
-        tvName.setText(recipe.strMeal)
+        //tvName.setText(recipe.strMeal)
 
         Picasso.get().load(recipe.strMealThumb).into(imgRecipeDetails)
         instructionsList()

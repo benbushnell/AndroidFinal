@@ -10,13 +10,11 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import hu.ait.androidfinal.adapter.FavoritesAdapter
 import hu.ait.androidfinal.adapter.PantryAdapter
 import hu.ait.androidfinal.adapter.RecipesPagerAdapter
 import hu.ait.androidfinal.data.Ingredient
-import hu.ait.androidfinal.fragments.FavoritesFragment
-import hu.ait.androidfinal.fragments.NewPantryItemDialog
-import hu.ait.androidfinal.fragments.PantryFragment
-import hu.ait.androidfinal.fragments.RecipeViewModel
+import hu.ait.androidfinal.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.favorites_fragment.*
 
@@ -36,7 +34,7 @@ class MainActivity : AppCompatActivity(), NewPantryItemDialog.ItemHandler {
 
         navigation.setOnNavigationItemSelectedListener(myOnNavigationItemSelectedListener)
 
-        showFragmentByTag(PantryFragment.TAG, false)
+        showFragmentByTag(FavoritesFragment.TAG, false, null)
     }
 
     override fun itemCreated(pantryItem: Ingredient) {
@@ -56,8 +54,8 @@ class MainActivity : AppCompatActivity(), NewPantryItemDialog.ItemHandler {
         supportFragmentManager.inTransaction{replace(frameId, fragment)}
     }
 
-    public fun showFragmentByTag(tag: String,
-                                 toBackStack: Boolean) {
+    fun showFragmentByTag(tag: String,
+                                 toBackStack: Boolean, bundle: Bundle?) {
         var fragment: Fragment? = supportFragmentManager.findFragmentByTag(tag)
         if (fragment == null) {
             Log.d("fff", "here")
@@ -65,9 +63,10 @@ class MainActivity : AppCompatActivity(), NewPantryItemDialog.ItemHandler {
                 fragment = FavoritesFragment()
             } else if (PantryFragment.TAG == tag) {
                 fragment = PantryFragment()
-            } //else if (RecipeDetailsFragment.TAG == tag) {
-                //fragment = RecipeDetailsFragment()
+            } else if (RecipeDetailsFragment.TAG == tag) {
+                fragment = RecipeDetailsFragment()
             }
+        }
         if (fragment != null) {
             val ft = supportFragmentManager
                 .beginTransaction()
@@ -75,6 +74,12 @@ class MainActivity : AppCompatActivity(), NewPantryItemDialog.ItemHandler {
             if (toBackStack) {
                 ft.addToBackStack(null)
             }
+        if (bundle != null){
+            fragment.setArguments(bundle)
+        }
+            //if(fragment == RecipeDetailsFragment()){
+            //    bundle.putSerializable("meal", recipeItem)
+           // }
             ft.commit()
         }
         }
@@ -82,15 +87,16 @@ class MainActivity : AppCompatActivity(), NewPantryItemDialog.ItemHandler {
     private val myOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                showFragmentByTag(FavoritesFragment.TAG, true)
+                showFragmentByTag(FavoritesFragment.TAG, true, null)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
-                showFragmentByTag(PantryFragment.TAG, true)
+                showFragmentByTag(PantryFragment.TAG, true, null)
                 return@OnNavigationItemSelectedListener true
             }
         }
         false
     }
+
 
 }

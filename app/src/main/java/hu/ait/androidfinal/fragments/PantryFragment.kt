@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.pantry_list_item.*
 class PantryFragment : Fragment() {
 
     companion object {
+        const val TAG_ITEM_DIALOG = "TAG_ITEM_DIALOG"
         const val TAG = "PantryFragment"
     }
 
