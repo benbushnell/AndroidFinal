@@ -35,9 +35,9 @@ class PantryAdapter(context: Context) : RecyclerView.Adapter<PantryAdapter.ViewH
 
         holder.tvPantryIngredient.text = pantryItem.name
         holder.cbInclude.isChecked = pantryItem.include
-        holder.tvPantryQuant.text = (pantryItem.quantity + " " + pantryItem.unit)
-        holder.tvType.text = spinnerTypeMap(pantryItem.type)
-        Log.d("type", pantryItem.type.toString())
+        //holder.tvPantryQuant.text = (pantryItem.quantity + " " + pantryItem.unit)
+        //holder.tvType.text = spinnerTypeMap(pantryItem.type)
+       // Log.d("type", pantryItem.type.toString())
     }
 
     fun spinnerTypeMap(position: Int): String{
@@ -65,7 +65,7 @@ class PantryAdapter(context: Context) : RecyclerView.Adapter<PantryAdapter.ViewH
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val tvPantryIngredient = itemView.tvPantryIngredient
         val cbInclude = itemView.cbInclude
-        val tvPantryQuant = itemView.tvPantryQuant
-        val tvType = itemView.tvType
+      //  val tvPantryQuant = itemView.tvPantryQuant
+      //  val tvType = itemView.tvType
     }
 }

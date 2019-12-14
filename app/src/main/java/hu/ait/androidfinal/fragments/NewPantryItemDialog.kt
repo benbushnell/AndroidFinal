@@ -4,13 +4,14 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.Spinner
 import androidx.fragment.app.DialogFragment
 import hu.ait.androidfinal.R
 import hu.ait.androidfinal.data.Ingredient
 import kotlinx.android.synthetic.main.new_pantry_item_dialog.view.*
-import kotlinx.android.synthetic.main.new_pantry_item_dialog.view.spinnerUnit
+//import kotlinx.android.synthetic.main.new_pantry_item_dialog.view.spinnerUnit
 import java.lang.RuntimeException
 
 class NewPantryItemDialog : DialogFragment() {
@@ -41,8 +42,8 @@ class NewPantryItemDialog : DialogFragment() {
 
     private lateinit var etItemName: EditText
     private lateinit var etItemQuantity: EditText
-    private lateinit var spinnerUnit: Spinner
-    private lateinit var spinnerType: Spinner
+  //  private lateinit var spinnerUnit: Spinner
+  //  private lateinit var spinnerType: Spinner
 
     //var isEditMode = false
 
@@ -55,10 +56,13 @@ class NewPantryItemDialog : DialogFragment() {
             R.layout.new_pantry_item_dialog, null
         )
         etItemName = rootView.etNewItemName
-        etItemQuantity = rootView.etNewItemQuant
-        spinnerUnit = rootView.spinnerUnit
-        spinnerType = rootView.spinnerType
+        Log.d("type", "onCreate selI dial" + rootView.etNewItemName.toString())
+       // etItemQuantity = rootView.etNewItemQuant
+      //  spinnerUnit = rootView.spinnerUnit
+       // Log.d("type", "onCreate selI dial" + rootView.spinnerType)
+       // spinnerType = rootView.spinnerType
         builder.setView(rootView)
+        Log.d("type", "onCreate selI dial editText" + etItemName.getText().toString())
 
         //isEditMode = ((arguments != null) && arguments!!.containsKey(ListActivity.KEY_ITEM))
         /**
@@ -103,11 +107,13 @@ class NewPantryItemDialog : DialogFragment() {
     }
 
     private fun handleItemCreate() {
+      //  Log.d("type","dialog "+ spinnerType.selectedItemPosition)
         itemHandler.itemCreated(
             Ingredient(
                 etItemName.text.toString(),
-                spinnerType.selectedItemPosition,
-                etItemQuantity.text.toString(), spinnerUnit.selectedItemPosition,
+                0,
+                null,
+                0,
                 false
             )
         )

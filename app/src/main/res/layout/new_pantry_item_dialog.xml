@@ -10,8 +10,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="text"
         android:hint="Ingredient Name"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,41 +23,15 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="100dp" />
 
-    <EditText
-        android:id="@+id/etNewItemQuant"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        android:hint="Quantity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/etNewItemName" />
-
-    <Spinner
-        android:id="@+id/spinnerUnit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:entries="@array/types_array"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/etNewItemQuant" />
-
-    <Spinner
-        android:id="@+id/spinnerType"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerUnit" />
-
     <TextView
         android:id="@+id/tvNewItemName"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="104dp"
+        android:layout_height="24dp"
         android:text="Name:"
-        app:layout_constraintBottom_toTopOf="@+id/etNewItemQuant"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/etNewItemName"
+        app:layout_constraintEnd_toStartOf="@+id/etNewItemName"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,28 +40,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Quantity:"
-        app:layout_constraintBottom_toTopOf="@+id/spinnerUnit"
-        app:layout_constraintEnd_toStartOf="@+id/etNewItemQuant"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvNewItemName" />
-
-    <TextView
-        android:id="@+id/tvNewItemUnit"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="Unit"
-        app:layout_constraintBottom_toBottomOf="@+id/spinnerUnit"
-        app:layout_constraintEnd_toStartOf="@+id/spinnerUnit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNewItemQuant" />
-
-    <TextView
-        android:id="@+id/tvNewItemCategory"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="Category"
-        app:layout_constraintBottom_toBottomOf="@+id/spinnerType"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerUnit" />
 </androidx.constraintlayout.widget.ConstraintLayout>

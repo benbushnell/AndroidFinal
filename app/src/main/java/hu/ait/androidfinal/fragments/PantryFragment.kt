@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import hu.ait.androidfinal.MainActivity
 import hu.ait.androidfinal.R
@@ -41,7 +42,7 @@ class PantryFragment : Fragment() {
         pantryAdapter = PantryAdapter(activity!!)
         val fm = fragmentManager
         recyclerPantry.adapter = pantryAdapter
-        recyclerPantry.layoutManager = LinearLayoutManager(activity)
+        recyclerPantry.layoutManager = GridLayoutManager(activity, 3)
         viewModel.getPantryItems().observe(this, Observer {savedPantryItem -> pantryAdapter.replaceItems(savedPantryItem.toMutableList())
         })
 

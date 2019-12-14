@@ -9,7 +9,7 @@
         android:id="@+id/tvDetailsName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="15dp"
         android:text="TextView"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -32,7 +32,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="200dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,16 +88,19 @@
 
     </LinearLayout>
 
-    <ImageView
+    <com.varunest.sparkbutton.SparkButton
         android:id="@+id/ivFavicon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:scaleType="fitXY"
         app:layout_constraintStart_toEndOf="@+id/tvDetailsName"
         app:layout_constraintTop_toBottomOf="@+id/imgRecipeDetails"
-        app:srcCompat="@drawable/starunfilled" />
+        app:sparkbutton_activeImage="@drawable/starfilled"
+        app:sparkbutton_iconSize="30dp"
+        app:sparkbutton_inActiveImage="@drawable/starunfilled"
+        app:sparkbutton_primaryColor="@color/star2"
+        app:sparkbutton_secondaryColor="@color/star1" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

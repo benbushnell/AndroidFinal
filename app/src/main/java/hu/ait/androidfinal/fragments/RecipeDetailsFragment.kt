@@ -35,13 +35,12 @@ class RecipeDetailsFragment : Fragment(){
     lateinit var recipeDetailsAdapter: RecipeDetailsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("Call", "onCreate called")
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
+        viewModel.getSavedFavorites()
+            .observe(this, Observer { savedFavorites -> inFavorites(savedFavorites) })
         bundle = getArguments()!!
         recipe = bundle.getSerializable("meal") as Meal
-
-        viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
-        viewModel.getSavedFavorites().observe(this, Observer {savedFavorites -> inFavorites(savedFavorites)})
     }
 
     override fun onCreateView(
@@ -50,11 +49,11 @@ class RecipeDetailsFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.activity_recipe_details, container, false)
-        //viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
-        viewModel.getSavedFavorites().observe(this, Observer {savedFavorites -> inFavorites(savedFavorites)})
         rootView.tvDetailsName.text = recipe.strMeal
         rootView.tvDirections.setMovementMethod(ScrollingMovementMethod())
         rootView.tvDirections.text = recipe.strInstructions
+        viewModel.getSavedFavorites()
+            .observe(this, Observer { savedFavorites -> inFavorites(savedFavorites) })
         Log.d("text", rootView.tvDirections.text.toString())
         Picasso.get().load(recipe.strMealThumb).into(rootView.imgRecipeDetails)
         Log.d("Call", "onCreateView called")
@@ -64,8 +63,7 @@ class RecipeDetailsFragment : Fragment(){
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Log.d("Call", "onActivityCreated called")
-        //viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
-        viewModel.getSavedFavorites().observe(this, Observer {savedFavorites -> inFavorites(savedFavorites)})
+        //viewModel.getSavedFavorites().observe(this, Observer {savedFavorites -> inFavorites(savedFavorites)})
 
 
         recipeDetailsAdapter = RecipeDetailsAdapter(activity!!, viewModel.instructionsList(recipe,ingredientList, amountList))
@@ -82,8 +80,6 @@ class RecipeDetailsFragment : Fragment(){
             }
             changeFavIcon()
         }
-
-        viewModel.getSavedFavorites().observe(this, Observer {savedFavorites -> inFavorites(savedFavorites)})
     }
 
 
@@ -98,9 +94,11 @@ class RecipeDetailsFragment : Fragment(){
 
     private fun changeFavIcon() {
         if (favorited) {
-            ivFavicon.setImageResource(R.drawable.starfilled)
+            ivFavicon.setChecked(true)
+            ivFavicon.playAnimation()
         } else {
-            ivFavicon.setImageResource(R.drawable.starunfilled)
+            ivFavicon.setChecked(false)
+            ivFavicon.playAnimation()
         }
     }
 }
