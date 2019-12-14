@@ -5,19 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isEmpty
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.squareup.picasso.Picasso
 import hu.ait.androidfinal.R
-import hu.ait.androidfinal.adapter.FavoritesAdapter
 import hu.ait.androidfinal.adapter.RecipeDetailsAdapter
 import hu.ait.androidfinal.data.Meal
 import kotlinx.android.synthetic.main.activity_recipe_details.*
 import kotlinx.android.synthetic.main.activity_recipe_details.view.*
-import android.R.attr.data
-
+import android.text.method.ScrollingMovementMethod
+import androidx.lifecycle.Observer
 
 
 class RecipeDetailsFragment : Fragment(){
@@ -26,10 +24,9 @@ class RecipeDetailsFragment : Fragment(){
     private lateinit var bundle: Bundle
     private var ingredientList = mutableListOf<String>()
     private var amountList = mutableListOf<String>()
-    var populated = false
+    var favorited = false
 
     companion object{
-        fun newInstance() = RecipeDetailsFragment
         const val TAG = "RecipeDetailsFragment"
     }
 
@@ -42,6 +39,9 @@ class RecipeDetailsFragment : Fragment(){
         super.onCreate(savedInstanceState)
         bundle = getArguments()!!
         recipe = bundle.getSerializable("meal") as Meal
+
+        viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
+        viewModel.getSavedFavorites().observe(this, Observer {savedFavorites -> inFavorites(savedFavorites)})
     }
 
     override fun onCreateView(
@@ -50,7 +50,12 @@ class RecipeDetailsFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.activity_recipe_details, container, false)
+        //viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
+        viewModel.getSavedFavorites().observe(this, Observer {savedFavorites -> inFavorites(savedFavorites)})
         rootView.tvDetailsName.text = recipe.strMeal
+        rootView.tvDirections.setMovementMethod(ScrollingMovementMethod())
+        rootView.tvDirections.text = recipe.strInstructions
+        Log.d("text", rootView.tvDirections.text.toString())
         Picasso.get().load(recipe.strMealThumb).into(rootView.imgRecipeDetails)
         Log.d("Call", "onCreateView called")
         return rootView
@@ -59,15 +64,43 @@ class RecipeDetailsFragment : Fragment(){
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Log.d("Call", "onActivityCreated called")
-        viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
-        tvDirections.text = recipe.strInstructions
+        //viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
+        viewModel.getSavedFavorites().observe(this, Observer {savedFavorites -> inFavorites(savedFavorites)})
+
 
         recipeDetailsAdapter = RecipeDetailsAdapter(activity!!, viewModel.instructionsList(recipe,ingredientList, amountList))
         recyclerIngredients.adapter = recipeDetailsAdapter
         recyclerIngredients.layoutManager = GridLayoutManager(activity, 2)
 
-        //for ()
-        ivFavicon.setOnClickListener{
+        ivFavicon.setOnClickListener {
+            if (favorited){
+                viewModel.deleteFavorite(recipe)
+                favorited = false
+            } else {
+                viewModel.saveFavoriteToRepo(recipe)
+                favorited = true
+            }
+            changeFavIcon()
+        }
+
+        viewModel.getSavedFavorites().observe(this, Observer {savedFavorites -> inFavorites(savedFavorites)})
+    }
+
+
+    private fun inFavorites (favList: List<Meal>){
+        for(i in 0 until (favList.size-1)){
+            if(recipe.idMeal == favList[i].idMeal){
+                favorited = true
+            }
+        }
+        changeFavIcon()
+    }
+
+    private fun changeFavIcon() {
+        if (favorited) {
+            ivFavicon.setImageResource(R.drawable.starfilled)
+        } else {
+            ivFavicon.setImageResource(R.drawable.starunfilled)
         }
     }
 }
