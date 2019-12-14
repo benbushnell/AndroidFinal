@@ -16,11 +16,11 @@ import kotlinx.android.synthetic.main.recipe_list_item.view.*
 class PantryAdapter(context: Context) : RecyclerView.Adapter<PantryAdapter.ViewHolder>() {
     val context = context
     var pantryList = mutableListOf<Ingredient>()
+    val viewModel = RecipeViewModel()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PantryAdapter.ViewHolder {
         val ingredientCard = LayoutInflater.from(context).inflate(
             R.layout.pantry_list_item, parent, false
-
         )
 
         return ViewHolder(ingredientCard)
@@ -31,10 +31,21 @@ class PantryAdapter(context: Context) : RecyclerView.Adapter<PantryAdapter.ViewH
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val pantryItem = pantryList.get(holder.adapterPosition)
+        val pantryItem = pantryList[position]
 
         holder.tvPantryIngredient.text = pantryItem.name
         holder.cbInclude.isChecked = pantryItem.include
+
+
+        holder.cbInclude.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){
+                pantryItem.include = true
+                viewModel.updateIsChecked(pantryItem)
+            }else{
+                pantryItem.include = false
+                viewModel.updateIsChecked(pantryItem)
+            }
+        }
         //holder.tvPantryQuant.text = (pantryItem.quantity + " " + pantryItem.unit)
         //holder.tvType.text = spinnerTypeMap(pantryItem.type)
        // Log.d("type", pantryItem.type.toString())

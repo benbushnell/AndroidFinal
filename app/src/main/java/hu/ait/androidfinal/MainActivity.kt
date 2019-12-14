@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import hu.ait.androidfinal.adapter.FavoritesAdapter
@@ -23,15 +24,12 @@ class MainActivity : AppCompatActivity(), NewPantryItemDialog.ItemHandler {
     //https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata
 
     private lateinit var viewModel: RecipeViewModel
-    lateinit var pantryAdapter: PantryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
-        pantryAdapter = PantryAdapter(this)
         //viewpager.adapter = RecipesPagerAdapter(supportFragmentManager)
-
         navigation.setOnNavigationItemSelectedListener(myOnNavigationItemSelectedListener)
 
         showFragmentByTag(FavoritesFragment.TAG, false, null)
@@ -39,7 +37,6 @@ class MainActivity : AppCompatActivity(), NewPantryItemDialog.ItemHandler {
 
     override fun itemCreated(pantryItem: Ingredient) {
         viewModel.saveItemToPantry(pantryItem)
-        pantryAdapter.addItem(pantryItem)
     }
 
     override fun itemUpdated(pantryItem: Ingredient) {
@@ -65,7 +62,10 @@ class MainActivity : AppCompatActivity(), NewPantryItemDialog.ItemHandler {
                 fragment = PantryFragment()
             } else if (RecipeDetailsFragment.TAG == tag) {
                 fragment = RecipeDetailsFragment()
+            } else if (SearchResultsFragment.TAG == tag) {
+                fragment = SearchResultsFragment()
             }
+
         }
         if (fragment != null) {
             val ft = supportFragmentManager

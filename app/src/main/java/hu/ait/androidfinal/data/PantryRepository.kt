@@ -1,5 +1,6 @@
 package hu.ait.androidfinal.data
 
+import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -33,5 +34,11 @@ class PantryRepository {
     fun editPantryItem(item: Ingredient): Task<Void> {
         var documentReference = baseUserPath.document(item.name!!)
         return documentReference.update("quantity", item.quantity)
+    }
+
+    fun updateIsChecked(item: Ingredient): Task<Void> {
+        Log.d("check", "updateisChecked called")
+        var documentReference = baseUserPath.document(item.name!!)
+        return documentReference.update("include", item.include)
     }
 }

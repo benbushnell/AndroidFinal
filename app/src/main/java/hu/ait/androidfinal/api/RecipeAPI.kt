@@ -20,7 +20,7 @@ interface RecipeAPI{
 
     //https://themealdb.com/api/json/v2/9973533/filter.php?i=cheese
     @GET("filter.php")
-    fun searchByMainIngredient(
+    fun searchByIngredients(
         @Query("i") field: String
     ): Call<Base>
 

@@ -81,6 +81,13 @@ class RecipeDetailsFragment : Fragment(){
             changeFavIcon()
         }
     }
+    /**
+    override fun onStop() {
+        Log.d("stopping", "called")
+        fragmentManager!!.popBackStack()
+        super.onStop()
+    }
+    **/
 
 
     private fun inFavorites (favList: List<Meal>){

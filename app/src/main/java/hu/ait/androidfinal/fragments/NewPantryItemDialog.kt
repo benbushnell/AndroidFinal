@@ -112,7 +112,7 @@ class NewPantryItemDialog : DialogFragment() {
             Ingredient(
                 etItemName.text.toString(),
                 0,
-                null,
+                "",
                 0,
                 false
             )

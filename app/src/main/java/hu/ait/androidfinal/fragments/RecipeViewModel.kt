@@ -5,9 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.firestore.EventListener
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.*
 import hu.ait.androidfinal.api.RecipeAPI
 import hu.ait.androidfinal.data.*
 import kotlinx.android.synthetic.main.favorites_fragment.*
@@ -17,19 +15,21 @@ import retrofit2.Response
 
 class RecipeViewModel : ViewModel() {
 
-    companion object{
+    companion object {
         const val TAG = "Recipe_VIEW_MODEL"
     }
     private var favoritesRepository = FavoritesRepository()
     private var pantryRepository = PantryRepository()
+    private var recipeApiRepo = RecipeAPIRepo()
     private val savedFavorites : MutableLiveData<List<Meal>> = MutableLiveData()
     private val savedPantryItems : MutableLiveData<List<Ingredient>> = MutableLiveData()
+    private val searchResults : MutableLiveData<Base> = MutableLiveData()
 
 
     // save favorite to firebase
-    fun saveFavoriteToRepo(favorite: Meal){
+    fun saveFavoriteToRepo(favorite: Meal) {
         favoritesRepository.saveFavorite(favorite).addOnFailureListener {
-            Log.e(TAG,"Failed to save Recipe!")
+            Log.e(TAG, "Failed to save Recipe!")
         }
     }
 
@@ -53,15 +53,15 @@ class RecipeViewModel : ViewModel() {
         return savedFavorites
     }
 
-    fun deleteFavorite(favoriteItem: Meal){
+    fun deleteFavorite(favoriteItem: Meal) {
         favoritesRepository.deleteFavorite(favoriteItem).addOnFailureListener {
-            Log.e(TAG,"Failed to delete Recipe")
+            Log.e(TAG, "Failed to delete Recipe")
         }
     }
 
     fun saveItemToPantry(item: Ingredient){
         pantryRepository.saveItem(item).addOnFailureListener {
-            Log.e(TAG,"Failed to save Recipe!")
+            Log.e(TAG, "Failed to save Recipe!")
         }
     }
 
@@ -169,6 +169,28 @@ class RecipeViewModel : ViewModel() {
         })
 
         return savedPantryItems
+    }
+
+    fun updateIsChecked(item: Ingredient){
+        pantryRepository.updateIsChecked(item).addOnFailureListener {
+            Log.d(TAG, "Failed to Update Include")
+        }.addOnSuccessListener {
+            Log.d("check", "Update success")
+        }
+    }
+
+
+    fun getIncludedString(includedList : MutableList<Ingredient>) : String {
+        var formattedList : MutableList<String> = mutableListOf()
+        for (item in includedList){
+            var name = item.name!!.replace(" ", "_")
+            formattedList.add(name)
+        }
+        Log.d("stringish", formattedList.joinToString(","))
+        return formattedList.joinToString(",")
+    }
+
+    fun searchByIngredients(searchString : String) {
     }
 
 }
