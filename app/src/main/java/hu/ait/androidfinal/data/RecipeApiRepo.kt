@@ -30,6 +30,25 @@ class RecipeAPIRepo {
         return results
     }
 
+    fun getRecipeById(id : String) : MutableLiveData<Base>{
+        val result : MutableLiveData<Base> = MutableLiveData()
+        val recipeGet = recipeApi.getRecipeById(id)
+        Log.d("api", recipeGet.toString())
+
+        recipeGet.enqueue( object : Callback<Base> {
+            override fun onFailure(call: Call<Base>, t: Throwable) {
+                Log.d("response", t.message!!)
+            }
+
+            override fun onResponse(call: Call<Base>, response: Response<Base>) {
+                Log.d("response", response.body().toString())
+                result.value = response.body()
+
+            }
+        })
+        return result
+    }
+
 
 
 
