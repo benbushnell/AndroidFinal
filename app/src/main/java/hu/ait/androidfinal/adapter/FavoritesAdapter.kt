@@ -45,6 +45,7 @@ class FavoritesAdapter(context: Context) : RecyclerView.Adapter<FavoritesAdapter
             val intent = Intent()
             intent.setClass(context as MainActivity, RecipeDetailsActivity::class.java )
             intent.putExtra("meal", recipeItem)
+            intent.putExtra("fav", true)
             context.startActivity(intent)
 
            // bundle.putSerializable("meal", recipeItem as Serializable)

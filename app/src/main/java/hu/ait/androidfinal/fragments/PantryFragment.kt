@@ -1,5 +1,6 @@
 package hu.ait.androidfinal.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +18,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 import hu.ait.androidfinal.MainActivity
 import hu.ait.androidfinal.R
+import hu.ait.androidfinal.RecipeDetailsActivity
+import hu.ait.androidfinal.SearchResultsActivity
 import hu.ait.androidfinal.adapter.PantryAdapter
 import hu.ait.androidfinal.api.RecipeAPI
 import hu.ait.androidfinal.data.Ingredient
@@ -104,9 +107,10 @@ class PantryFragment : Fragment() {
                 viewModel.getIncludedString(includedItems)
             ).observe(viewLifecycleOwner, Observer {base ->
                 var meals = base.meals
-                var bundle = Bundle()
-                bundle.putSerializable("TOP_TEN", meals as Serializable)
-                (context as MainActivity).showFragmentByTag(SearchResultsFragment.TAG, true, bundle)
+                val intent = Intent()
+                intent.setClass(context as MainActivity, SearchResultsActivity::class.java )
+                intent.putExtra("meals", meals as Serializable)
+                this.startActivity(intent)
             })
 
         }

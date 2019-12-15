@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import hu.ait.androidfinal.MainActivity
 import hu.ait.androidfinal.R
+import hu.ait.androidfinal.RecipeDetailsActivity
+import hu.ait.androidfinal.SearchResultsActivity
 import hu.ait.androidfinal.data.Meal
 import hu.ait.androidfinal.fragments.RecipeDetailsFragment
 import kotlinx.android.synthetic.main.recipe_list_item.view.*
@@ -41,8 +43,11 @@ class SearchResultsAdapter(context: Context) : RecyclerView.Adapter<SearchResult
         Picasso.get().load(recipeItem.strMealThumb).into(holder.imgRecipe)
 
         holder.wholeCard.setOnClickListener {
-            bundle.putSerializable("meal", recipeItem as Serializable)
-            (context as MainActivity).showFragmentByTag(RecipeDetailsFragment.TAG, false, bundle)
+            val intent = Intent()
+            intent.setClass(context, RecipeDetailsActivity::class.java )
+            intent.putExtra("meal", recipeItem)
+            intent.putExtra("fav", false)
+            context.startActivity(intent)
         }
     }
 

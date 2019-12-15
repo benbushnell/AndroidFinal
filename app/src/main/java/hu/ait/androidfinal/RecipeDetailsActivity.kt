@@ -25,7 +25,7 @@ class RecipeDetailsActivity : AppCompatActivity(){
     private var amountList = mutableListOf<String>()
     private lateinit var recipeShell: Meal
     private lateinit var recipe: Meal
-    var favorited = false
+    var favorited = true
     val recipeApiRepo = RecipeAPIRepo()
     private lateinit var viewModel: RecipeViewModel
 
@@ -34,15 +34,13 @@ class RecipeDetailsActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_details)
-        viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
-        viewModel.getSavedFavorites()
-            .observe(this, Observer { savedFavorites -> inFavorites(savedFavorites) })
+
 
 
         recipeShell = (intent.getSerializableExtra("meal") as Meal)
+        favorited = (intent.getSerializableExtra("fav") as Boolean)
 
-        Log.d("bundle", recipe.strMeal.toString())
-        tvDirections.movementMethod = ScrollingMovementMethod()
+       // tvDirections.movementMethod = ScrollingMovementMethod()
 
         recipeApiRepo.getRecipeById(
             recipeShell.idMeal!!
@@ -52,15 +50,15 @@ class RecipeDetailsActivity : AppCompatActivity(){
                 Toast.makeText(this, "No Results", Toast.LENGTH_SHORT).show()
             } else {
                 recipe = meal[0]
+                viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
+                viewModel.getSavedFavorites()
+                    .observe(this, Observer { savedFavorites -> inFavorites(savedFavorites) })
                 tvDetailsName.text = recipe.strMeal
                 tvDirections.text = recipe.strInstructions
                 Picasso.get().load(recipe.strMealThumb).into(imgRecipeDetails)
                 viewModel.getSavedFavorites()
                     .observe(this, Observer { savedFavorites -> inFavorites(savedFavorites) })
-                recipeDetailsAdapter = RecipeDetailsAdapter(this, viewModel.instructionsList(recipe,ingredientList, amountList))
-
-                recyclerIngredients.adapter = recipeDetailsAdapter
-                recyclerIngredients.layoutManager = GridLayoutManager(this, 2)
+                initRecycler()
             }
         })
         ivFavicon.setOnClickListener {
@@ -85,12 +83,12 @@ class RecipeDetailsActivity : AppCompatActivity(){
     }
 
 
-
-
     private fun inFavorites (favList: List<Meal>){
         for(i in 0 until (favList.size-1)){
             if(recipe.idMeal == favList[i].idMeal){
                 favorited = true
+            } else{
+                favorited = false
             }
         }
         changeFavIcon()
