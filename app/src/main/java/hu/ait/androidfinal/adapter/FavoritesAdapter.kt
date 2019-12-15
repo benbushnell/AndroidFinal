@@ -52,6 +52,8 @@ class FavoritesAdapter(context: Context) : RecyclerView.Adapter<FavoritesAdapter
     //    notifyItemInserted(recipesList.lastIndex)
     //}
 
+
+
     fun replaceItems(recipes: List<Meal>) {
         this.recipesList = recipes
         notifyDataSetChanged()

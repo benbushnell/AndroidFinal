@@ -55,7 +55,6 @@ class MainActivity : AppCompatActivity(), NewPantryItemDialog.ItemHandler {
                                  toBackStack: Boolean, bundle: Bundle?) {
         var fragment: Fragment? = supportFragmentManager.findFragmentByTag(tag)
         if (fragment == null) {
-            Log.d("fff", "here")
             if (FavoritesFragment.TAG == tag) {
                 fragment = FavoritesFragment()
             } else if (PantryFragment.TAG == tag) {

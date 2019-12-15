@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import hu.ait.androidfinal.R
 import hu.ait.androidfinal.data.Ingredient
 import hu.ait.androidfinal.data.Meal
+import hu.ait.androidfinal.data.PantryRepository
 import hu.ait.androidfinal.fragments.RecipeViewModel
 import kotlinx.android.synthetic.main.pantry_list_item.view.*
 import kotlinx.android.synthetic.main.recipe_list_item.view.*
@@ -17,6 +18,8 @@ class PantryAdapter(context: Context) : RecyclerView.Adapter<PantryAdapter.ViewH
     val context = context
     var pantryList = mutableListOf<Ingredient>()
     val viewModel = RecipeViewModel()
+    val checkedList = mutableListOf<Ingredient>()
+    val pantryRepository = PantryRepository()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PantryAdapter.ViewHolder {
         val ingredientCard = LayoutInflater.from(context).inflate(
@@ -40,12 +43,21 @@ class PantryAdapter(context: Context) : RecyclerView.Adapter<PantryAdapter.ViewH
         holder.cbInclude.setOnCheckedChangeListener { buttonView, isChecked ->
             if(isChecked){
                 pantryItem.include = true
+                checkedList.add(pantryItem)
                 viewModel.updateIsChecked(pantryItem)
             }else{
                 pantryItem.include = false
+                checkedList.remove(pantryItem)
                 viewModel.updateIsChecked(pantryItem)
             }
         }
+
+        holder.icDelete.setOnClickListener{
+            pantryList.remove(pantryItem)
+            notifyDataSetChanged()
+            pantryRepository.deletePantryItem(pantryItem)
+        }
+
         //holder.tvPantryQuant.text = (pantryItem.quantity + " " + pantryItem.unit)
         //holder.tvType.text = spinnerTypeMap(pantryItem.type)
        // Log.d("type", pantryItem.type.toString())
@@ -72,10 +84,25 @@ class PantryAdapter(context: Context) : RecyclerView.Adapter<PantryAdapter.ViewH
         notifyItemInserted(pantryList.lastIndex)
     }
 
+    fun deleteItemSet(deleteList: MutableList<Ingredient>){
+        for(i in 0..deleteList.size){
+            val pantryIndex = pantryList.indexOf(deleteList[i])
+            pantryList.removeAt(pantryIndex)
+            notifyItemRemoved(pantryIndex)
+        }
+    }
+
+    fun deleteItem(){
+
+    }
+
+
+
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val tvPantryIngredient = itemView.tvPantryIngredient
         val cbInclude = itemView.cbInclude
+        val icDelete = itemView.icDelete
       //  val tvPantryQuant = itemView.tvPantryQuant
       //  val tvType = itemView.tvType
     }

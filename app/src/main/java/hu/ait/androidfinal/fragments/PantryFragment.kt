@@ -58,7 +58,7 @@ class PantryFragment : Fragment() {
         //viewModel.getPantryItems().observe(viewLifecycleOwner, Observer {savedPantryItem -> pantryAdapter.replaceItems(savedPantryItem.toMutableList())
         //})
         Log.d("observe", viewModel.getPantryItems().hasActiveObservers().toString())
-        recyclerPantry.layoutManager = GridLayoutManager(activity, 3)
+        recyclerPantry.layoutManager = GridLayoutManager(activity, 2)
         var allPostsListener = pantryRepository.getPantryItems().addSnapshotListener(
             object: EventListener<QuerySnapshot> {
                 override fun onEvent(querySnapshot: QuerySnapshot?, e: FirebaseFirestoreException?) {
@@ -94,8 +94,6 @@ class PantryFragment : Fragment() {
         btnAddPantryItem.setOnClickListener {
             NewPantryItemDialog()
                 .show(activity!!.supportFragmentManager, TAG_ITEM_DIALOG)
-
-
         }
 
         btnSearchByIngredients.setOnClickListener {
