@@ -180,10 +180,10 @@ class RecipeViewModel : ViewModel() {
     }
 
 
-    fun getIncludedString(includedList : MutableList<Ingredient>) : String {
+    fun getIncludedString(includedList : MutableList<String>) : String {
         var formattedList : MutableList<String> = mutableListOf()
         for (item in includedList){
-            var name = item.name!!.replace(" ", "_")
+            var name = item.replace(" ", "_")
             formattedList.add(name)
         }
         Log.d("stringish", formattedList.joinToString(","))

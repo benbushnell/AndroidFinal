@@ -42,7 +42,7 @@ class PantryFragment : Fragment() {
     private lateinit var viewModel: RecipeViewModel
     lateinit var pantryAdapter: PantryAdapter
     val pantryRepository = PantryRepository()
-    var includedItems : MutableList<Ingredient> = mutableListOf()
+    var includedItems : MutableList<String> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,17 +78,24 @@ class PantryFragment : Fragment() {
                                 val item = dc.document.toObject(Ingredient::class.java)
                                 pantryAdapter.addItem(item)
                                 if(item.include){
-                                    includedItems.add(item)
+                                    includedItems.add(item.name!!)
                                 }
                             }
                             DocumentChange.Type.MODIFIED -> {
                                 val item = dc.document.toObject(Ingredient::class.java)
-                                if (item in includedItems && !item.include) includedItems.remove(item)
+                                Log.d("included", item!!.name)
+
+                                if (item.name in includedItems && !item.include) {
+                                    includedItems.remove(item.name)
+                                } else {
+                                    includedItems.add(item.name!!)
+                                }
+                                Log.d("included", includedItems.toString())
                                 Toast.makeText(activity, "update: ", Toast.LENGTH_LONG).show()
                             }
                             DocumentChange.Type.REMOVED -> {
                                 val item = dc.document.toObject(Ingredient::class.java)
-                                if (item in includedItems) includedItems.remove(item)
+                                if (item.name in includedItems) includedItems.remove(item.name)
                             }
                         }
                     }
