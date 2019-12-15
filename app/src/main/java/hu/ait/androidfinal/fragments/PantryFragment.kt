@@ -77,7 +77,7 @@ class PantryFragment : Fragment() {
                             DocumentChange.Type.ADDED -> {
                                 val item = dc.document.toObject(Ingredient::class.java)
                                 pantryAdapter.addItem(item)
-                                if(item.include){
+                                if(item.include && !(item.name in includedItems)){
                                     includedItems.add(item.name!!)
                                 }
                             }
@@ -114,12 +114,15 @@ class PantryFragment : Fragment() {
                 viewModel.getIncludedString(includedItems)
             ).observe(viewLifecycleOwner, Observer {base ->
                 var meals = base.meals
-                val intent = Intent()
-                intent.setClass(context as MainActivity, SearchResultsActivity::class.java )
-                intent.putExtra("meals", meals as Serializable)
-                this.startActivity(intent)
+                if(meals.isNullOrEmpty()){
+                    Toast.makeText(context, "No Results", Toast.LENGTH_SHORT).show()
+                } else {
+                    val intent = Intent()
+                    intent.setClass(context as MainActivity, SearchResultsActivity::class.java)
+                    intent.putExtra("meals", meals as Serializable)
+                    this.startActivity(intent)
+                }
             })
-
         }
     }
 
