@@ -56,7 +56,9 @@ class FavoritesAdapter(context: Context) : RecyclerView.Adapter<FavoritesAdapter
 
     fun replaceItems(recipes: List<Meal>) {
         this.recipesList = recipes
-        notifyDataSetChanged()
+        for(i in 0 until recipesList.size-1){
+            notifyItemChanged(i)
+        }
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){

@@ -23,6 +23,7 @@ import hu.ait.androidfinal.data.Ingredient
 import hu.ait.androidfinal.data.PantryRepository
 import hu.ait.androidfinal.data.RecipeAPIRepo
 import hu.ait.androidfinal.fragments.NewPantryItemDialog.Companion.TAG_ITEM_DIALOG
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.favorites_fragment.*
 import kotlinx.android.synthetic.main.pantry_fragment.*
 import kotlinx.android.synthetic.main.pantry_list_item.*
@@ -59,6 +60,7 @@ class PantryFragment : Fragment() {
         //})
         Log.d("observe", viewModel.getPantryItems().hasActiveObservers().toString())
         recyclerPantry.layoutManager = GridLayoutManager(activity, 2)
+        recyclerPantry.itemAnimator = SlideInLeftAnimator()
         var allPostsListener = pantryRepository.getPantryItems().addSnapshotListener(
             object: EventListener<QuerySnapshot> {
                 override fun onEvent(querySnapshot: QuerySnapshot?, e: FirebaseFirestoreException?) {

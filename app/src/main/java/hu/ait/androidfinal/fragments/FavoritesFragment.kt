@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,6 +16,7 @@ import hu.ait.androidfinal.R
 import hu.ait.androidfinal.adapter.FavoritesAdapter
 import hu.ait.androidfinal.api.RecipeAPI
 import hu.ait.androidfinal.data.Base
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import kotlinx.android.synthetic.main.favorites_fragment.*
 import kotlinx.android.synthetic.main.recipe_list_item.view.*
 import retrofit2.Call
@@ -46,6 +48,7 @@ class FavoritesFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
         favoritesAdapter = FavoritesAdapter(activity!!)
         recyclerRecipes.adapter = favoritesAdapter
+        recyclerRecipes.itemAnimator = SlideInUpAnimator(OvershootInterpolator(1f))
         recyclerRecipes.layoutManager = GridLayoutManager(activity, 2)
         viewModel.getSavedFavorites().observe(this, Observer {savedFavorites -> favoritesAdapter.replaceItems(savedFavorites)
         })

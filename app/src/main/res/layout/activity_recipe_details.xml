@@ -5,22 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvDetailsName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="TextView"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgRecipeDetails" />
-
 
     <ImageView
         android:id="@+id/imgRecipeDetails"
-        android:layout_width="391dp"
+        android:layout_width="match_parent"
         android:layout_height="214dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,6 +16,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars[8]" />
+
+    <TextView
+        android:id="@+id/tvDetailsName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#B3000000"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imgRecipeDetails"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -64,6 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
+                    app:fastScrollEnabled="false"
                     android:scrollbars="vertical" />
 
                 <TextView
@@ -92,10 +94,10 @@
         android:id="@+id/ivFavicon"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toEndOf="@+id/tvDetailsName"
-        app:layout_constraintTop_toBottomOf="@+id/imgRecipeDetails"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:sparkbutton_activeImage="@drawable/starfilled"
         app:sparkbutton_iconSize="30dp"
         app:sparkbutton_inActiveImage="@drawable/starunfilled"

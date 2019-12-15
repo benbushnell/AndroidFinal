@@ -8,34 +8,54 @@
 
     <Button
         android:id="@+id/btnAddPantryItem"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add to Pantry"
-        android:textSize="40sp"
+        android:layout_marginStart="30dp"
+        android:text="Add Item"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvPantry"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPantry" />
 
 
     <Button
         android:id="@+id/btnSearchByIngredients"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:paddingStart="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:text="Search"
-        android:textSize="40sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAddPantryItem" />
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvPantry"
+        app:layout_constraintTop_toBottomOf="@+id/tvPantry" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerPantry"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="20dp"
+        android:padding="5dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSearchByIngredients"
+        app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/pantry_list_item" />
+
+    <TextView
+        android:id="@+id/tvPantry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Pantry"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

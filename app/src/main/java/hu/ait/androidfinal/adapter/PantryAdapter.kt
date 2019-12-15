@@ -84,21 +84,6 @@ class PantryAdapter(context: Context) : RecyclerView.Adapter<PantryAdapter.ViewH
         notifyItemInserted(pantryList.lastIndex)
     }
 
-    fun deleteItemSet(deleteList: MutableList<Ingredient>){
-        for(i in 0..deleteList.size){
-            val pantryIndex = pantryList.indexOf(deleteList[i])
-            pantryList.removeAt(pantryIndex)
-            notifyItemRemoved(pantryIndex)
-        }
-    }
-
-    fun deleteItem(){
-
-    }
-
-
-
-
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val tvPantryIngredient = itemView.tvPantryIngredient
         val cbInclude = itemView.cbInclude

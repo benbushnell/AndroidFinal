@@ -63,6 +63,8 @@ dependencies {
     implementation 'com.flaviofaria:kenburnsview:1.0.7'
 
     implementation 'com.github.varunest:sparkbutton:1.0.6'
+
+    implementation 'jp.wasabeef:recyclerview-animators:3.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
