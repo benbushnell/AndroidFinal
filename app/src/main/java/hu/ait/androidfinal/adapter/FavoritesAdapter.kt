@@ -1,14 +1,17 @@
 package hu.ait.androidfinal.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import hu.ait.androidfinal.MainActivity
 import hu.ait.androidfinal.R
+import hu.ait.androidfinal.RecipeDetailsActivity
 import hu.ait.androidfinal.data.Meal
 import hu.ait.androidfinal.fragments.RecipeDetailsFragment
 import kotlinx.android.synthetic.main.recipe_list_item.view.*
@@ -39,8 +42,13 @@ class FavoritesAdapter(context: Context) : RecyclerView.Adapter<FavoritesAdapter
         holder.tvRecipeName.text = recipeItem.strMeal
 
         holder.wholeCard.setOnClickListener {
-            bundle.putSerializable("meal", recipeItem as Serializable)
-            (context as MainActivity).showFragmentByTag(RecipeDetailsFragment.TAG, false, bundle)
+            val intent = Intent()
+            intent.setClass(context as MainActivity, RecipeDetailsActivity::class.java )
+            intent.putExtra("meal", recipeItem)
+            context.startActivity(intent)
+
+           // bundle.putSerializable("meal", recipeItem as Serializable)
+            //(context as MainActivity).showFragmentByTag(RecipeDetailsFragment.TAG, false, bundle)
         }
 
 
