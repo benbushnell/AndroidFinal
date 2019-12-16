@@ -5,31 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient"
     tools:context=".fragments.FavoritesFragment">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/layoutRefresh"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerRecipes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerRecipes"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="80dp"
-            android:padding="20dp"
-            android:scrollbars="vertical"
-            tools:listitem="@layout/recipe_list_item" />
-
-        <TextView
-            android:id="@+id/tvRecipe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="test" />
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        android:padding="20dp"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/recipe_list_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
