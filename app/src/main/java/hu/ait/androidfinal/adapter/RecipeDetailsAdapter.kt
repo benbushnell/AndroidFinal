@@ -37,10 +37,6 @@ class RecipeDetailsAdapter(context: Context, listIngredients: List<Pair<String, 
         holder.tvIngredient.text = amount + " " +ingredient
     }
 
-    //fun addIngredientPairing(ingredient: String, amount: String) {
-    //    ingredientList.add(Pair(ingredient, amount))
-    //    notifyItemInserted(ingredientList.lastIndex)
-   // }
 
     class ViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
         val tvIngredient = itemview.tvIngredient

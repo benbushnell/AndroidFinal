@@ -58,25 +58,6 @@ class PantryAdapter(context: Context) : RecyclerView.Adapter<PantryAdapter.ViewH
             pantryRepository.deletePantryItem(pantryItem)
         }
 
-        //holder.tvPantryQuant.text = (pantryItem.quantity + " " + pantryItem.unit)
-        //holder.tvType.text = spinnerTypeMap(pantryItem.type)
-       // Log.d("type", pantryItem.type.toString())
-    }
-
-    fun spinnerTypeMap(position: Int): String{
-        when (position){
-            0 -> return "None"
-            1 -> return "Protein"
-            2 -> return "Carb"
-            3 -> return "Vegetable"
-            4 -> return "Staple"
-            else -> return "Fruit"
-        }
-    }
-
-    fun replaceItems(pantry: MutableList<Ingredient>) {
-        this.pantryList = pantry
-        notifyDataSetChanged()
     }
 
     fun addItem(item: Ingredient){
@@ -96,7 +77,5 @@ class PantryAdapter(context: Context) : RecyclerView.Adapter<PantryAdapter.ViewH
         val tvPantryIngredient = itemView.tvPantryIngredient
         val cbInclude = itemView.cbInclude
         val icDelete = itemView.icDelete
-      //  val tvPantryQuant = itemView.tvPantryQuant
-      //  val tvType = itemView.tvType
     }
 }

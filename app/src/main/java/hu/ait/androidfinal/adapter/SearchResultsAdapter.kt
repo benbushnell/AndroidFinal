@@ -60,10 +60,6 @@ class SearchResultsAdapter(context: Context) : RecyclerView.Adapter<SearchResult
         }
     }
 
-    fun addRecipe(recipe: Meal){
-        recipesList.add(recipe)
-        notifyItemInserted(recipesList.lastIndex)
-    }
 
     fun replaceItems(recipes: MutableList<Meal>) {
         this.recipesList = recipes

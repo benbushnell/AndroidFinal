@@ -22,9 +22,8 @@ class FavoritesAdapter(context: Context) : RecyclerView.Adapter<FavoritesAdapter
     val context = context
     var recipesList = mutableListOf<Meal>()
     val bundle = Bundle()
-    var opened = false
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val recipeItemCard = LayoutInflater.from(context).inflate(
             R.layout.recipe_list_item, parent, false
         )
@@ -47,8 +46,6 @@ class FavoritesAdapter(context: Context) : RecyclerView.Adapter<FavoritesAdapter
             intent.putExtra("fav", true)
             context.startActivity(intent)
 
-           // bundle.putSerializable("meal", recipeItem as Serializable)
-            //(context as MainActivity).showFragmentByTag(RecipeDetailsFragment.TAG, false, bundle)
         }
 
 
@@ -58,15 +55,6 @@ class FavoritesAdapter(context: Context) : RecyclerView.Adapter<FavoritesAdapter
     fun addRecipe(recipe: Meal){
         recipesList.add(recipe)
         notifyItemInserted(recipesList.lastIndex)
-    }
-
-
-
-    fun replaceItems(recipes: MutableList<Meal>) {
-        this.recipesList = recipes
-        for(i in 0 until recipesList.size-1){
-            notifyItemChanged(i)
-        }
     }
 
     fun removeIngredientByName(recipe: Meal) {

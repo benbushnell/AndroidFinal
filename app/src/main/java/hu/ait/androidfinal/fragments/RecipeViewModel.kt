@@ -154,25 +154,6 @@ class RecipeViewModel : ViewModel() {
 
     }
 
-    fun getPantryItems() : LiveData<List<Ingredient>>{
-        var savedPantryList : MutableList<Ingredient> = mutableListOf()
-        pantryRepository.getPantryItems().addSnapshotListener(EventListener<QuerySnapshot> {value, e ->
-            if (e != null) {
-                Log.w(TAG, "Listen failed.", e)
-                savedPantryItems.value = null
-                return@EventListener
-            }
-
-            for (doc in value!!) {
-                var pantryItem = doc.toObject(Ingredient::class.java)
-                savedPantryList.add(pantryItem)
-            }
-            savedPantryItems.value = savedPantryList
-        })
-
-        return savedPantryItems
-    }
-
     fun updateIsChecked(item: Ingredient){
         pantryRepository.updateIsChecked(item).addOnFailureListener {
             Log.d(TAG, "Failed to Update Include")
@@ -191,9 +172,5 @@ class RecipeViewModel : ViewModel() {
         Log.d("stringish", formattedList.joinToString(","))
         return formattedList.joinToString(",")
     }
-
-    fun searchByIngredients(searchString : String) {
-    }
-
 }
 

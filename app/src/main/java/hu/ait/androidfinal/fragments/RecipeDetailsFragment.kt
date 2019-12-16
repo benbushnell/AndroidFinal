@@ -39,7 +39,7 @@ class RecipeDetailsFragment : Fragment(){
         viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
         viewModel.getSavedFavorites()
             .observe(this, Observer { savedFavorites -> inFavorites(savedFavorites) })
-        bundle = getArguments()!!
+        bundle = arguments!!
         recipe = bundle.getSerializable("meal") as Meal
     }
 
@@ -54,17 +54,12 @@ class RecipeDetailsFragment : Fragment(){
         rootView.tvDirections.text = recipe.strInstructions
         viewModel.getSavedFavorites()
             .observe(this, Observer { savedFavorites -> inFavorites(savedFavorites) })
-        Log.d("text", rootView.tvDirections.text.toString())
         Picasso.get().load(recipe.strMealThumb).into(rootView.imgRecipeDetails)
-        Log.d("Call", "onCreateView called")
         return rootView
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        Log.d("Call", "onActivityCreated called")
-        //viewModel.getSavedFavorites().observe(this, Observer {savedFavorites -> inFavorites(savedFavorites)})
-
 
         recipeDetailsAdapter = RecipeDetailsAdapter(activity!!, viewModel.instructionsList(recipe,ingredientList, amountList))
         recyclerIngredients.adapter = recipeDetailsAdapter
@@ -81,13 +76,6 @@ class RecipeDetailsFragment : Fragment(){
             changeFavIcon()
         }
     }
-    /**
-    override fun onStop() {
-        Log.d("stopping", "called")
-        fragmentManager!!.popBackStack()
-        super.onStop()
-    }
-    **/
 
 
     private fun inFavorites (favList: List<Meal>){

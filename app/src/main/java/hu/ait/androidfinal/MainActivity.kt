@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity(), NewPantryItemDialog.ItemHandler {
         setContentView(R.layout.activity_main)
         viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
         viewpager.adapter = RecipesPagerAdapter(supportFragmentManager)
-        //navigation.setOnNavigationItemSelectedListener(myOnNavigationItemSelectedListener)
 
         showFragmentByTag(FavoritesFragment.TAG, false, null)
     }
@@ -40,7 +39,7 @@ class MainActivity : AppCompatActivity(), NewPantryItemDialog.ItemHandler {
     }
 
     override fun itemUpdated(pantryItem: Ingredient) {
-        //viewModel.
+        //do nothing, just for override
     }
 
     inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
@@ -76,26 +75,10 @@ class MainActivity : AppCompatActivity(), NewPantryItemDialog.ItemHandler {
         if (bundle != null){
             fragment.setArguments(bundle)
         }
-            //if(fragment == RecipeDetailsFragment()){
-            //    bundle.putSerializable("meal", recipeItem)
-           // }
             ft.commit()
         }
         }
 
-    private val myOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                showFragmentByTag(FavoritesFragment.TAG, true, null)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_dashboard -> {
-                showFragmentByTag(PantryFragment.TAG, true, null)
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }
 
 
 }

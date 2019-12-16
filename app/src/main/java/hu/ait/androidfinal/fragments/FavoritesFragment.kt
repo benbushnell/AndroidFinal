@@ -33,7 +33,6 @@ import retrofit2.Response
 class FavoritesFragment : Fragment() {
 
     companion object {
-        fun newInstance() = FavoritesFragment()
         const val TAG = "FavoritesFragment"
     }
 
@@ -82,103 +81,5 @@ class FavoritesFragment : Fragment() {
                     }
                 }
             })
-        /**
-        layoutRefresh.setOnRefreshListener {
-            layoutRefresh.isRefreshing = true
-            viewModel.getSavedFavorites().observe(this, Observer {savedFavorites -> favoritesAdapter.replaceItems(savedFavorites)
-            })
-                  layoutRefresh.isRefreshing = false
     }
-    **/
-        /**
-
-        btnAddFav.setOnClickListener {
-            layoutRefresh.isRefreshing = true
-            viewModel.getSavedFavorites().observe(this, Observer {savedFavorites -> favoritesAdapter.replaceItems(savedFavorites)
-            })
-            val recipeGet = RecipeAPI().getRecipeById("52903")
-            recipeGet.enqueue(object : Callback<Base> {
-                override fun onFailure(call: Call<Base>, t: Throwable) {
-                    //tvRecipeName.text = t.message
-                    layoutRefresh.isRefreshing = false
-                    Toast.makeText(activity, t.message, Toast.LENGTH_SHORT).show()
-                    Log.d("response", t.message!!)
-                }
-
-                override fun onResponse(call: Call<Base>, response: Response<Base>) {
-                    layoutRefresh.isRefreshing = false
-                    Log.d("response", response.body().toString())
-
-                    val recipeResponse = response.body()
-                    recipeResponse?.let {
-                        viewModel.saveFavoriteToRepo(recipeResponse.meals[0])
-                    }
-                    // Toast.makeText(this@MainActivity, "${response.body()}", Toast.LENGTH_SHORT).show()
-                    //Log.d("response", recipeGet.toString())
-                    Log.d("response", call.toString())
-                    Log.d("response", response.toString())
-                    Log.d("response", response.body().toString())
-                }
-            })
-        } **/
-    }
-    /**
-    override fun onResume() {
-        super.onResume()
-        viewModel.getSavedFavorites().observe(this, Observer {savedFavorites ->
-            for (fav in favoritesAdapter.recipesList) {
-                if (fav !in savedFavorites) {
-                    favoritesAdapter.removeIngredientByName(fav)
-                }
-            }
-            })
-        }
-    **/
-
-    //Add swipe refresh isRefreshing statements back in
-
-
-
-
-    /**
-    private fun  getRandomRecipes(){
-        layoutRefresh.isRefreshing = true
-        val recipeIdList = mutableListOf("52903", "52831", "52945", "52813")
-        val resultList = mutableListOf<Meal>()
-        var i = 0
-        while (i < 4) {
-            //val recipeSearch = recipeAPI.searchByMainIngredient("chicken_breast")
-            val recipeGet = RecipeAPI().getRecipeById(recipeIdList[i])
-            recipeGet.enqueue(object : Callback<Base> {
-                override fun onFailure(call: Call<Base>, t: Throwable) {
-                    //tvRecipeName.text = t.message
-                    layoutRefresh.isRefreshing = false
-                    Toast.makeText(activity, t.message, Toast.LENGTH_SHORT).show()
-                    Log.d("response", t.message!!)
-                }
-
-                override fun onResponse(call: Call<Base>, response: Response<Base>) {
-                    layoutRefresh.isRefreshing = false
-                    Log.d("response", response.body().toString())
-
-                    val recipeResponse = response.body()
-                    recipeResponse?.let {
-                        favoritesAdapter.addRecipe(recipeResponse.meals[0])
-                    }
-                    Log.d("list", resultList.toString())
-                    // Toast.makeText(this@MainActivity, "${response.body()}", Toast.LENGTH_SHORT).show()
-                    //Log.d("response", recipeGet.toString())
-                    Log.d("response", call.toString())
-                    Log.d("response", response.toString())
-                    Log.d("response", response.body().toString())
-                }
-            })
-            i++
-        }
-    }
-    **/
-
-
-
-
 }

@@ -25,7 +25,6 @@ import hu.ait.androidfinal.api.RecipeAPI
 import hu.ait.androidfinal.data.Ingredient
 import hu.ait.androidfinal.data.PantryRepository
 import hu.ait.androidfinal.data.RecipeAPIRepo
-import hu.ait.androidfinal.fragments.NewPantryItemDialog.Companion.TAG_ITEM_DIALOG
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.favorites_fragment.*
 import kotlinx.android.synthetic.main.pantry_fragment.*
@@ -55,11 +54,8 @@ class PantryFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
         pantryAdapter = PantryAdapter(activity!!)
-        val fm = fragmentManager
         recyclerPantry.adapter = pantryAdapter
         recyclerPantry.layoutManager = LinearLayoutManager(activity)
-        //viewModel.getPantryItems().observe(viewLifecycleOwner, Observer {savedPantryItem -> pantryAdapter.replaceItems(savedPantryItem.toMutableList())})
-        Log.d("observe", viewModel.getPantryItems().hasActiveObservers().toString())
         recyclerPantry.layoutManager = GridLayoutManager(activity, 2)
         recyclerPantry.itemAnimator = SlideInLeftAnimator()
         var allPostsListener = pantryRepository.getPantryItems().addSnapshotListener(

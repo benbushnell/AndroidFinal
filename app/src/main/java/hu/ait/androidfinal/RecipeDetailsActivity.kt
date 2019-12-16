@@ -18,10 +18,8 @@ class RecipeDetailsActivity : AppCompatActivity(){
 
     private var ingredientList = mutableListOf<String>()
     private var amountList = mutableListOf<String>()
-    private lateinit var recipeShell: Meal
     private lateinit var recipe: Meal
     var favorited = true
-    val recipeApiRepo = RecipeAPIRepo()
     private lateinit var viewModel: RecipeViewModel
     private var favList = listOf<Meal>()
 

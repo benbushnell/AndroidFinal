@@ -40,18 +40,11 @@ class LoginActivity : AppCompatActivity() {
             .build()
 
         var mgsic = GoogleSignIn.getClient(this, gso)
-        val firebaseAuth = FirebaseAuth.getInstance()
         btnLogin.setOnClickListener {
             val loginIntent = mgsic.getSignInIntent()
             startActivityForResult(loginIntent, REQUEST_ID)
         }
 
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val currentUser = auth.currentUser
-        //updateUI(account) // Do what you should do if user is already signed in
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -91,21 +84,6 @@ class LoginActivity : AppCompatActivity() {
                     // If sign in fails, display a message to the user.
                     Toast.makeText(this, "Authentication Failed.", Toast.LENGTH_LONG).show()
                 }
-
-                // ...
-            }
-    }
-
-    fun checkExistingUser(){
-        var firestoreDB = FirebaseFirestore.getInstance()
-        var user = FirebaseAuth.getInstance().currentUser
-        firestoreDB.collection("users").whereEqualTo("uid", user!!.uid)
-            .get()
-            .addOnSuccessListener {
-
-            }
-            .addOnFailureListener {
-                firestoreDB.collection("users").document()
             }
     }
 }

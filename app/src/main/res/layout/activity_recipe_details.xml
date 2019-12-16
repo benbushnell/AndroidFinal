@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:background="#B3011936"
         android:text="TextView"
+        android:textAlignment="viewStart"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         android:textStyle="bold"
