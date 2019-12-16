@@ -34,7 +34,7 @@ class RecipeViewModel : ViewModel() {
     }
 
     // get realtime updates from firebase regarding saved favorites
-    fun getSavedFavorites(): LiveData<List<Meal>>{
+    fun getSavedFavorites(): MutableLiveData<List<Meal>>{
         favoritesRepository.getSavedFavorites().addSnapshotListener(EventListener<QuerySnapshot> { value, e ->
             if (e != null) {
                 Log.w(TAG, "Listen failed.", e)

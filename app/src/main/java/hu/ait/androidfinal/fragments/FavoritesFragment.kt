@@ -11,11 +11,18 @@ import android.view.animation.OvershootInterpolator
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
 
 import hu.ait.androidfinal.R
 import hu.ait.androidfinal.adapter.FavoritesAdapter
 import hu.ait.androidfinal.api.RecipeAPI
 import hu.ait.androidfinal.data.Base
+import hu.ait.androidfinal.data.FavoritesRepository
+import hu.ait.androidfinal.data.Ingredient
+import hu.ait.androidfinal.data.Meal
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import kotlinx.android.synthetic.main.favorites_fragment.*
 import kotlinx.android.synthetic.main.recipe_list_item.view.*
@@ -33,7 +40,7 @@ class FavoritesFragment : Fragment() {
 
 
     private lateinit var viewModel: RecipeViewModel
-
+    val favoritesRepo = FavoritesRepository()
     lateinit var favoritesAdapter: FavoritesAdapter
 
     override fun onCreateView(
@@ -50,16 +57,39 @@ class FavoritesFragment : Fragment() {
         recyclerRecipes.adapter = favoritesAdapter
         recyclerRecipes.itemAnimator = SlideInUpAnimator(OvershootInterpolator(1f))
         recyclerRecipes.layoutManager = GridLayoutManager(activity, 2)
-        viewModel.getSavedFavorites().observe(this, Observer {savedFavorites -> favoritesAdapter.replaceItems(savedFavorites)
-        })
+        var allFavesListener = favoritesRepo.getSavedFavorites().addSnapshotListener(
+            object: EventListener<QuerySnapshot> {
+                override fun onEvent(querySnapshot: QuerySnapshot?, e: FirebaseFirestoreException?) {
 
+                    if (e != null) {
+                        return
+                    }
+                    for (dc in querySnapshot!!.documentChanges) {
+                        when (dc.type) {
+                            DocumentChange.Type.ADDED -> {
+                                val item = dc.document.toObject(Meal::class.java)
+                                favoritesAdapter.addRecipe(item)
+
+                            }
+                            DocumentChange.Type.MODIFIED -> {
+                                val item = dc.document.toObject(Meal::class.java)
+                            }
+                            DocumentChange.Type.REMOVED -> {
+                                val item = dc.document.toObject(Meal::class.java)
+                                favoritesAdapter.removeIngredientByName(item)
+                            }
+                        }
+                    }
+                }
+            })
+        /**
         layoutRefresh.setOnRefreshListener {
             layoutRefresh.isRefreshing = true
             viewModel.getSavedFavorites().observe(this, Observer {savedFavorites -> favoritesAdapter.replaceItems(savedFavorites)
             })
-            layoutRefresh.isRefreshing = false
-        }
-
+                  layoutRefresh.isRefreshing = false
+    }
+    **/
         /**
 
         btnAddFav.setOnClickListener {
@@ -92,6 +122,18 @@ class FavoritesFragment : Fragment() {
             })
         } **/
     }
+    /**
+    override fun onResume() {
+        super.onResume()
+        viewModel.getSavedFavorites().observe(this, Observer {savedFavorites ->
+            for (fav in favoritesAdapter.recipesList) {
+                if (fav !in savedFavorites) {
+                    favoritesAdapter.removeIngredientByName(fav)
+                }
+            }
+            })
+        }
+    **/
 
     //Add swipe refresh isRefreshing statements back in
 

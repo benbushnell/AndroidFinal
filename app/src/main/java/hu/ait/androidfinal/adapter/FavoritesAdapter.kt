@@ -20,7 +20,7 @@ import java.io.Serializable
 
 class FavoritesAdapter(context: Context) : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {
     val context = context
-    var recipesList = listOf<Meal>()
+    var recipesList = mutableListOf<Meal>()
     val bundle = Bundle()
     var opened = false
 
@@ -56,17 +56,25 @@ class FavoritesAdapter(context: Context) : RecyclerView.Adapter<FavoritesAdapter
         Picasso.get().load(recipeItem.strMealThumb).into(holder.imgRecipe)
     }
 
-    //fun addRecipe(recipe: Meal){
-    //   recipesList.add(recipe)
-    //    notifyItemInserted(recipesList.lastIndex)
-    //}
+    fun addRecipe(recipe: Meal){
+        recipesList.add(recipe)
+        notifyItemInserted(recipesList.lastIndex)
+    }
 
 
 
-    fun replaceItems(recipes: List<Meal>) {
+    fun replaceItems(recipes: MutableList<Meal>) {
         this.recipesList = recipes
         for(i in 0 until recipesList.size-1){
             notifyItemChanged(i)
+        }
+    }
+
+    fun removeIngredientByName(recipe: Meal) {
+        val index = recipesList.indexOf(recipe)
+        if (index != -1) {
+            recipesList.removeAt(index)
+            notifyItemRemoved(index)
         }
     }
 
