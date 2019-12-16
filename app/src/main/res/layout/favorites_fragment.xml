@@ -1,38 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/favoritesFragment"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.FavoritesFragment">
 
-    <Button
-        android:id="@+id/btnAddFav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add"/>
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/layoutRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            tools:listitem="@layout/recipe_list_item"
             android:id="@+id/recyclerRecipes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="80dp"
             android:padding="20dp"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            tools:listitem="@layout/recipe_list_item" />
 
         <TextView
             android:id="@+id/tvRecipe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="test"
-            />
+            android:text="test" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

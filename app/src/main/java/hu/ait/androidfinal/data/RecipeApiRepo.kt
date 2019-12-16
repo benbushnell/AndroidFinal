@@ -12,7 +12,7 @@ import retrofit2.Response
 class RecipeAPIRepo {
     private  var recipeApi: RecipeAPI = RecipeAPI.invoke()
 
-    public fun searchByIngredients(ingredientsString : String) : MutableLiveData<Base>{
+    fun searchByIngredients(ingredientsString : String) : MutableLiveData<Base>{
         val results : MutableLiveData<Base> = MutableLiveData()
         val recipesGet = recipeApi.searchByIngredients(ingredientsString)
 

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import hu.ait.androidfinal.MainActivity
@@ -13,6 +14,7 @@ import hu.ait.androidfinal.R
 import hu.ait.androidfinal.RecipeDetailsActivity
 import hu.ait.androidfinal.SearchResultsActivity
 import hu.ait.androidfinal.data.Meal
+import hu.ait.androidfinal.data.RecipeAPIRepo
 import hu.ait.androidfinal.fragments.RecipeDetailsFragment
 import kotlinx.android.synthetic.main.recipe_list_item.view.*
 import java.io.Serializable
@@ -21,6 +23,7 @@ class SearchResultsAdapter(context: Context) : RecyclerView.Adapter<SearchResult
     val context = context
     var recipesList = mutableListOf<Meal>()
     val bundle = Bundle()
+    val recipeApiRepo = RecipeAPIRepo()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultsAdapter.ViewHolder {
@@ -43,11 +46,17 @@ class SearchResultsAdapter(context: Context) : RecyclerView.Adapter<SearchResult
         Picasso.get().load(recipeItem.strMealThumb).into(holder.imgRecipe)
 
         holder.wholeCard.setOnClickListener {
-            val intent = Intent()
-            intent.setClass(context, RecipeDetailsActivity::class.java )
-            intent.putExtra("meal", recipeItem)
-            intent.putExtra("fav", false)
-            context.startActivity(intent)
+            recipeApiRepo.getRecipeById(
+                recipeItem.idMeal!!
+            ).observe((context as SearchResultsActivity), Observer { base ->
+                val list = base.meals
+                val recipe = list[0]
+                val intent = Intent()
+                intent.setClass(context, RecipeDetailsActivity::class.java)
+                intent.putExtra("meal", recipe)
+                intent.putExtra("fav", false)
+                context.startActivity(intent)
+            })
         }
     }
 

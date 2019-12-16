@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity(), NewPantryItemDialog.ItemHandler {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
-        //viewpager.adapter = RecipesPagerAdapter(supportFragmentManager)
-        navigation.setOnNavigationItemSelectedListener(myOnNavigationItemSelectedListener)
+        viewpager.adapter = RecipesPagerAdapter(supportFragmentManager)
+        //navigation.setOnNavigationItemSelectedListener(myOnNavigationItemSelectedListener)
 
         showFragmentByTag(FavoritesFragment.TAG, false, null)
     }

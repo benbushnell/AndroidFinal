@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -37,30 +39,18 @@ class RecipeDetailsActivity : AppCompatActivity(){
 
 
 
-        recipeShell = (intent.getSerializableExtra("meal") as Meal)
+        recipe = (intent.getSerializableExtra("meal") as Meal)
         favorited = (intent.getSerializableExtra("fav") as Boolean)
 
-       // tvDirections.movementMethod = ScrollingMovementMethod()
+        // tvDirections.movementMethod = ScrollingMovementMethod()
+        viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
+        tvDetailsName.text = recipe.strMeal
+        tvDirections.text = recipe.strInstructions
+        Picasso.get().load(recipe.strMealThumb).into(imgRecipeDetails)
+        viewModel.getSavedFavorites()
+            .observe(this, Observer { savedFavorites -> inFavorites(savedFavorites) })
+        initRecycler()
 
-        recipeApiRepo.getRecipeById(
-            recipeShell.idMeal!!
-        ).observe(this, Observer {base ->
-            var meal = base.meals
-            if (meal.isNullOrEmpty()){
-                Toast.makeText(this, "No Results", Toast.LENGTH_SHORT).show()
-            } else {
-                recipe = meal[0]
-                viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
-                viewModel.getSavedFavorites()
-                    .observe(this, Observer { savedFavorites -> inFavorites(savedFavorites) })
-                tvDetailsName.text = recipe.strMeal
-                tvDirections.text = recipe.strInstructions
-                Picasso.get().load(recipe.strMealThumb).into(imgRecipeDetails)
-                viewModel.getSavedFavorites()
-                    .observe(this, Observer { savedFavorites -> inFavorites(savedFavorites) })
-                initRecycler()
-            }
-        })
         ivFavicon.setOnClickListener {
             if (favorited){
                 viewModel.deleteFavorite(recipe)

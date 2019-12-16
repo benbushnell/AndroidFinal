@@ -81,7 +81,6 @@ class LoginActivity : AppCompatActivity() {
                     Log.d("auth", "signInWithCredential:success")
                     val user = auth.currentUser
                     FirestoreUtil.initCurrentUserFirstTime {
-                        Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show()
                         val loginIntent = Intent()
                         loginIntent.setClass(this, MainActivity::class.java )
                         startActivity(loginIntent)
@@ -90,7 +89,6 @@ class LoginActivity : AppCompatActivity() {
 
                 } else {
                     // If sign in fails, display a message to the user.
-                    Log.w("auth", "signInWithCredential:failure", task.exception)
                     Toast.makeText(this, "Authentication Failed.", Toast.LENGTH_LONG).show()
                 }
 

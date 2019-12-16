@@ -60,6 +60,8 @@ class FavoritesFragment : Fragment() {
             layoutRefresh.isRefreshing = false
         }
 
+        /**
+
         btnAddFav.setOnClickListener {
             layoutRefresh.isRefreshing = true
             viewModel.getSavedFavorites().observe(this, Observer {savedFavorites -> favoritesAdapter.replaceItems(savedFavorites)
@@ -88,7 +90,7 @@ class FavoritesFragment : Fragment() {
                     Log.d("response", response.body().toString())
                 }
             })
-        }
+        } **/
     }
 
     //Add swipe refresh isRefreshing statements back in

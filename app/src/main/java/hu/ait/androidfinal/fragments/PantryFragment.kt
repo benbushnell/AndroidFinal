@@ -48,8 +48,7 @@ class PantryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView =  inflater.inflate(R.layout.pantry_fragment, container, false)
-        return rootView
+        return inflater.inflate(R.layout.pantry_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -59,8 +58,7 @@ class PantryFragment : Fragment() {
         val fm = fragmentManager
         recyclerPantry.adapter = pantryAdapter
         recyclerPantry.layoutManager = LinearLayoutManager(activity)
-        //viewModel.getPantryItems().observe(viewLifecycleOwner, Observer {savedPantryItem -> pantryAdapter.replaceItems(savedPantryItem.toMutableList())
-        //})
+        //viewModel.getPantryItems().observe(viewLifecycleOwner, Observer {savedPantryItem -> pantryAdapter.replaceItems(savedPantryItem.toMutableList())})
         Log.d("observe", viewModel.getPantryItems().hasActiveObservers().toString())
         recyclerPantry.layoutManager = GridLayoutManager(activity, 2)
         recyclerPantry.itemAnimator = SlideInLeftAnimator()
@@ -69,11 +67,10 @@ class PantryFragment : Fragment() {
                 override fun onEvent(querySnapshot: QuerySnapshot?, e: FirebaseFirestoreException?) {
 
                     if (e != null) {
-                        Toast.makeText(activity, "listen error: ${e.message}", Toast.LENGTH_LONG).show()
                         return
                     }
-                    for (dc in querySnapshot!!.getDocumentChanges()) {
-                        when (dc.getType()) {
+                    for (dc in querySnapshot!!.documentChanges) {
+                        when (dc.type) {
                             DocumentChange.Type.ADDED -> {
                                 val item = dc.document.toObject(Ingredient::class.java)
                                 pantryAdapter.addItem(item)
@@ -83,15 +80,12 @@ class PantryFragment : Fragment() {
                             }
                             DocumentChange.Type.MODIFIED -> {
                                 val item = dc.document.toObject(Ingredient::class.java)
-                                Log.d("included", item!!.name)
 
                                 if (item.name in includedItems && !item.include) {
                                     includedItems.remove(item.name)
                                 } else {
                                     includedItems.add(item.name!!)
                                 }
-                                Log.d("included", includedItems.toString())
-                                Toast.makeText(activity, "update: ", Toast.LENGTH_LONG).show()
                             }
                             DocumentChange.Type.REMOVED -> {
                                 val item = dc.document.toObject(Ingredient::class.java)

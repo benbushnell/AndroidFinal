@@ -40,7 +40,7 @@ class PantryAdapter(context: Context) : RecyclerView.Adapter<PantryAdapter.ViewH
         holder.cbInclude.isChecked = pantryItem.include
 
 
-        holder.cbInclude.setOnCheckedChangeListener { buttonView, isChecked ->
+        holder.cbInclude.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked){
                 pantryItem.include = true
                 checkedList.add(pantryItem)
@@ -80,8 +80,16 @@ class PantryAdapter(context: Context) : RecyclerView.Adapter<PantryAdapter.ViewH
     }
 
     fun addItem(item: Ingredient){
-        pantryList.add(item)
-        notifyItemInserted(pantryList.lastIndex)
+        var existing = false
+        for(i in 0 until pantryList.size-1){
+            if (item.name == pantryList[i].name){
+                existing = true
+            }
+        }
+        if (!existing) {
+            pantryList.add(item)
+            notifyItemInserted(pantryList.lastIndex)
+        }
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){

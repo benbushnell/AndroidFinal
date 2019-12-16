@@ -48,6 +48,8 @@ class RecipeViewModel : ViewModel() {
                 savedFavoritesList.add(favoriteItem)
             }
             savedFavorites.value = savedFavoritesList
+
+            Log.d("saved", savedFavorites.toString())
         })
 
         return savedFavorites
@@ -75,7 +77,7 @@ class RecipeViewModel : ViewModel() {
             ingredientList.add(recipe.strIngredient19)
             amountList.add(recipe.strMeasure19!!)
         }
-        if (!(recipe.strIngredient18!!.isNullOrBlank())) {
+        if (!(recipe.strIngredient18.isNullOrBlank())) {
             ingredientList.add(recipe.strIngredient18)
             amountList.add(recipe.strMeasure18!!)
         }
