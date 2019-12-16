@@ -2,33 +2,23 @@ package hu.ait.androidfinal.fragments
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
-import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
-
 import hu.ait.androidfinal.R
+import hu.ait.androidfinal.RecipeViewModel
 import hu.ait.androidfinal.adapter.FavoritesAdapter
-import hu.ait.androidfinal.api.RecipeAPI
-import hu.ait.androidfinal.data.Base
 import hu.ait.androidfinal.data.FavoritesRepository
-import hu.ait.androidfinal.data.Ingredient
 import hu.ait.androidfinal.data.Meal
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import kotlinx.android.synthetic.main.favorites_fragment.*
-import kotlinx.android.synthetic.main.recipe_list_item.view.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class FavoritesFragment : Fragment() {
 
@@ -36,10 +26,8 @@ class FavoritesFragment : Fragment() {
         const val TAG = "FavoritesFragment"
     }
 
-
-
     private lateinit var viewModel: RecipeViewModel
-    val favoritesRepo = FavoritesRepository()
+    private val favoritesRepo = FavoritesRepository()
     lateinit var favoritesAdapter: FavoritesAdapter
 
     override fun onCreateView(
@@ -56,7 +44,7 @@ class FavoritesFragment : Fragment() {
         recyclerRecipes.adapter = favoritesAdapter
         recyclerRecipes.itemAnimator = SlideInUpAnimator(OvershootInterpolator(1f))
         recyclerRecipes.layoutManager = GridLayoutManager(activity, 2)
-        var allFavesListener = favoritesRepo.getSavedFavorites().addSnapshotListener(
+        val allFavesListener = favoritesRepo.getSavedFavorites().addSnapshotListener(
             object: EventListener<QuerySnapshot> {
                 override fun onEvent(querySnapshot: QuerySnapshot?, e: FirebaseFirestoreException?) {
 

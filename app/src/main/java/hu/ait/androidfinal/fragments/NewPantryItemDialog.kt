@@ -6,12 +6,10 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
-import android.widget.Spinner
 import androidx.fragment.app.DialogFragment
 import hu.ait.androidfinal.R
 import hu.ait.androidfinal.data.Ingredient
 import kotlinx.android.synthetic.main.new_pantry_item_dialog.view.*
-//import kotlinx.android.synthetic.main.new_pantry_item_dialog.view.spinnerUnit
 import java.lang.RuntimeException
 
 class NewPantryItemDialog : DialogFragment() {

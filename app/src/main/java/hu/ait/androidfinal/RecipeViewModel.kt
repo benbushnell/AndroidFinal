@@ -1,17 +1,10 @@
-package hu.ait.androidfinal.fragments
+package hu.ait.androidfinal
 
 import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.*
-import hu.ait.androidfinal.api.RecipeAPI
 import hu.ait.androidfinal.data.*
-import kotlinx.android.synthetic.main.favorites_fragment.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class RecipeViewModel : ViewModel() {
 
@@ -20,10 +13,7 @@ class RecipeViewModel : ViewModel() {
     }
     private var favoritesRepository = FavoritesRepository()
     private var pantryRepository = PantryRepository()
-    private var recipeApiRepo = RecipeAPIRepo()
     private val savedFavorites : MutableLiveData<List<Meal>> = MutableLiveData()
-    private val savedPantryItems : MutableLiveData<List<Ingredient>> = MutableLiveData()
-    private val searchResults : MutableLiveData<Base> = MutableLiveData()
 
 
     // save favorite to firebase
@@ -42,14 +32,13 @@ class RecipeViewModel : ViewModel() {
                 return@EventListener
             }
 
-            var savedFavoritesList : MutableList<Meal> = mutableListOf()
+            val savedFavoritesList : MutableList<Meal> = mutableListOf()
             for (doc in value!!) {
-                var favoriteItem = doc.toObject(Meal::class.java)
+                val favoriteItem = doc.toObject(Meal::class.java)
                 savedFavoritesList.add(favoriteItem)
             }
             savedFavorites.value = savedFavoritesList
 
-            Log.d("saved", savedFavorites.toString())
         })
 
         return savedFavorites
@@ -157,19 +146,16 @@ class RecipeViewModel : ViewModel() {
     fun updateIsChecked(item: Ingredient){
         pantryRepository.updateIsChecked(item).addOnFailureListener {
             Log.d(TAG, "Failed to Update Include")
-        }.addOnSuccessListener {
-            Log.d("check", "Update success")
         }
     }
 
 
     fun getIncludedString(includedList : MutableList<String>) : String {
-        var formattedList : MutableList<String> = mutableListOf()
+        val formattedList : MutableList<String> = mutableListOf()
         for (item in includedList){
-            var name = item.replace(" ", "_")
+            val name = item.replace(" ", "_")
             formattedList.add(name)
         }
-        Log.d("stringish", formattedList.joinToString(","))
         return formattedList.joinToString(",")
     }
 }

@@ -1,36 +1,28 @@
 package hu.ait.androidfinal.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import hu.ait.androidfinal.R
 import hu.ait.androidfinal.data.Ingredient
-import hu.ait.androidfinal.data.Meal
 import hu.ait.androidfinal.data.PantryRepository
-import hu.ait.androidfinal.fragments.RecipeViewModel
+import hu.ait.androidfinal.RecipeViewModel
 import kotlinx.android.synthetic.main.pantry_list_item.view.*
-import kotlinx.android.synthetic.main.recipe_list_item.view.*
 
 class PantryAdapter(context: Context) : RecyclerView.Adapter<PantryAdapter.ViewHolder>() {
     val context = context
-    var pantryList = mutableListOf<Ingredient>()
-    val viewModel = RecipeViewModel()
-    val checkedList = mutableListOf<Ingredient>()
-    val pantryRepository = PantryRepository()
+    private var pantryList = mutableListOf<Ingredient>()
+    private val viewModel = RecipeViewModel()
+    private val checkedList = mutableListOf<Ingredient>()
+    private val pantryRepository = PantryRepository()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PantryAdapter.ViewHolder {
         val ingredientCard = LayoutInflater.from(context).inflate(
             R.layout.pantry_list_item, parent, false
         )
-
         return ViewHolder(ingredientCard)
-    }
-
-    override fun getItemCount(): Int {
-        return pantryList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -71,6 +63,10 @@ class PantryAdapter(context: Context) : RecyclerView.Adapter<PantryAdapter.ViewH
             pantryList.add(item)
             notifyItemInserted(pantryList.lastIndex)
         }
+    }
+
+    override fun getItemCount(): Int {
+        return pantryList.size
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){

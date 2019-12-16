@@ -2,7 +2,6 @@ package hu.ait.androidfinal.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,19 +15,13 @@ import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
-import hu.ait.androidfinal.MainActivity
-import hu.ait.androidfinal.R
-import hu.ait.androidfinal.RecipeDetailsActivity
-import hu.ait.androidfinal.SearchResultsActivity
+import hu.ait.androidfinal.*
 import hu.ait.androidfinal.adapter.PantryAdapter
-import hu.ait.androidfinal.api.RecipeAPI
 import hu.ait.androidfinal.data.Ingredient
 import hu.ait.androidfinal.data.PantryRepository
 import hu.ait.androidfinal.data.RecipeAPIRepo
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
-import kotlinx.android.synthetic.main.favorites_fragment.*
 import kotlinx.android.synthetic.main.pantry_fragment.*
-import kotlinx.android.synthetic.main.pantry_list_item.*
 import java.io.Serializable
 
 class PantryFragment : Fragment() {
@@ -105,7 +98,7 @@ class PantryFragment : Fragment() {
             ).observe(viewLifecycleOwner, Observer {base ->
                 var meals = base.meals
                 if(meals.isNullOrEmpty()){
-                    Toast.makeText(context, "No Results", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, getString(R.string.no_results), Toast.LENGTH_SHORT).show()
                 } else {
                     val intent = Intent()
                     intent.setClass(context as MainActivity, SearchResultsActivity::class.java)
