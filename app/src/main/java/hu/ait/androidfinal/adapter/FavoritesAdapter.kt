@@ -40,7 +40,6 @@ class FavoritesAdapter(context: Context) : RecyclerView.Adapter<FavoritesAdapter
         val recipeItem = recipesList[position]
 
         holder.tvRecipeName.text = recipeItem.strMeal
-
         holder.wholeCard.setOnClickListener {
             val intent = Intent()
             intent.setClass(context as MainActivity, RecipeDetailsActivity::class.java )

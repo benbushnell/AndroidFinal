@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import hu.ait.androidfinal.R
+import kotlinx.android.synthetic.main.activity_recipe_details.view.*
 import kotlinx.android.synthetic.main.ingredient_step.view.*
 
 class RecipeDetailsAdapter(context: Context, listIngredients: List<Pair<String, String>>): RecyclerView.Adapter<RecipeDetailsAdapter.ViewHolder>() {

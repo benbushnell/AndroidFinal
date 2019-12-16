@@ -23,6 +23,7 @@ class RecipeDetailsActivity : AppCompatActivity(){
     var favorited = true
     val recipeApiRepo = RecipeAPIRepo()
     private lateinit var viewModel: RecipeViewModel
+    private var favList = listOf<Meal>()
 
     lateinit var recipeDetailsAdapter: RecipeDetailsAdapter
 
@@ -39,20 +40,22 @@ class RecipeDetailsActivity : AppCompatActivity(){
         tvDirections.text = recipe.strInstructions
         Picasso.get().load(recipe.strMealThumb).into(imgRecipeDetails)
         viewModel.getSavedFavorites()
-            .observe(this, Observer { savedFavorites -> inFavorites(savedFavorites) })
+            .observe(this, Observer { savedFavorites -> favList = savedFavorites
+                if (recipe in favList){
+                    ivFavicon.isChecked = true
+                }
+            })
         initRecycler()
 
 
         ivFavicon.setOnClickListener {
-            if (favorited){
+            if (recipe in favList){
                 viewModel.deleteFavorite(recipe)
-
-                favorited = false
+                ivFavicon.isChecked = false
             } else {
+                ivFavicon.playAnimation()
                 viewModel.saveFavoriteToRepo(recipe)
-                favorited = true
             }
-            changeFavIcon()
         }
     }
 
@@ -65,25 +68,4 @@ class RecipeDetailsActivity : AppCompatActivity(){
         recyclerIngredients.layoutManager = GridLayoutManager(this@RecipeDetailsActivity, 2)
     }
 
-
-    private fun inFavorites (favList: List<Meal>){
-        for(i in 0 until (favList.size-1)){
-            if(recipe.idMeal == favList[i].idMeal){
-                favorited = true
-            } else{
-                favorited = false
-            }
-        }
-        changeFavIcon()
-    }
-
-    private fun changeFavIcon() {
-        if (favorited) {
-            ivFavicon.setChecked(true)
-            ivFavicon.playAnimation()
-        } else {
-            ivFavicon.setChecked(false)
-            ivFavicon.playAnimation()
-        }
-    }
 }
