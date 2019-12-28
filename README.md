@@ -6,6 +6,7 @@ Our final project for our mobile development course, created by [@n0ahth0mas](ht
 [Additional Information](#extra) 
 
 <a name="final">
+	
 # FINAL PROJECT: HOMECOOK
 
 This was the final project for our mobile course. There were no real instructions for this project other than expand upon all other lessons, so we put together our collective knowledge and interests to create this application. Our final product was Homecook, a cooking app where users sign in and can store the ingredients they currently have, search recipes based on main ingredient, and view their favorited recipes. The main elements of this project were:
