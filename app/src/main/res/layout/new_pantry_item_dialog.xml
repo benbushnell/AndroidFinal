@@ -10,7 +10,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Ingredient Name"
+        android:hint="@string/ingredient_name"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -27,7 +27,7 @@
         android:id="@+id/tvNewItemName"
         android:layout_width="104dp"
         android:layout_height="24dp"
-        android:text="Name:"
+        android:text="@string/name"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/etNewItemName"
         app:layout_constraintEnd_toStartOf="@+id/etNewItemName"
@@ -39,7 +39,7 @@
         android:id="@+id/tvNewItemQuant"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="Quantity:"
+        android:text="@string/quantity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvNewItemName" />
 </androidx.constraintlayout.widget.ConstraintLayout>

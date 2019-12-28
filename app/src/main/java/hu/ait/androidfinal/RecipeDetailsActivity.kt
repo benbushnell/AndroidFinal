@@ -6,11 +6,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.squareup.picasso.Picasso
-import hu.ait.androidfinal.adapter.FavoritesAdapter
 import hu.ait.androidfinal.adapter.RecipeDetailsAdapter
 import hu.ait.androidfinal.data.Meal
-import hu.ait.androidfinal.data.RecipeAPIRepo
-import hu.ait.androidfinal.fragments.RecipeViewModel
 import kotlinx.android.synthetic.main.activity_recipe_details.*
 
 
@@ -19,7 +16,6 @@ class RecipeDetailsActivity : AppCompatActivity(){
     private var ingredientList = mutableListOf<String>()
     private var amountList = mutableListOf<String>()
     private lateinit var recipe: Meal
-    var favorited = true
     private lateinit var viewModel: RecipeViewModel
     private var favList = listOf<Meal>()
 
@@ -29,9 +25,7 @@ class RecipeDetailsActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_details)
 
-
         recipe = (intent.getSerializableExtra("meal") as Meal)
-        favorited = (intent.getSerializableExtra("fav") as Boolean)
 
         viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
         tvDetailsName.text = recipe.strMeal
@@ -44,7 +38,6 @@ class RecipeDetailsActivity : AppCompatActivity(){
                 }
             })
         initRecycler()
-
 
         ivFavicon.setOnClickListener {
             if (recipe in favList){

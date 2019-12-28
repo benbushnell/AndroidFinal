@@ -1,10 +1,8 @@
 package hu.ait.androidfinal.data
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import hu.ait.androidfinal.api.RecipeAPI
-import kotlinx.android.synthetic.main.favorites_fragment.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

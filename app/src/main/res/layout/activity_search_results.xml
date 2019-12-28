@@ -5,15 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CFCDD1"
-    tools:context=".fragments.SearchResultsFragment">
+    android:background="#CFCDD1">
 
     <TextView
         android:id="@+id/tvSearchResults"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Search Results"
+        android:text="@string/search_results_title"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
