@@ -6,19 +6,14 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
-import android.widget.Spinner
 import androidx.fragment.app.DialogFragment
 import hu.ait.androidfinal.R
 import hu.ait.androidfinal.data.Ingredient
 import kotlinx.android.synthetic.main.new_pantry_item_dialog.view.*
-//import kotlinx.android.synthetic.main.new_pantry_item_dialog.view.spinnerUnit
 import java.lang.RuntimeException
 
 class NewPantryItemDialog : DialogFragment() {
 
-    companion object {
-        const val TAG_ITEM_DIALOG = "TAG_ITEM_DIALOG"
-    }
 
     interface ItemHandler {
         fun itemCreated(pantryItem: Ingredient)
@@ -41,11 +36,6 @@ class NewPantryItemDialog : DialogFragment() {
     }
 
     private lateinit var etItemName: EditText
-    private lateinit var etItemQuantity: EditText
-  //  private lateinit var spinnerUnit: Spinner
-  //  private lateinit var spinnerType: Spinner
-
-    //var isEditMode = false
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireContext())
@@ -56,28 +46,12 @@ class NewPantryItemDialog : DialogFragment() {
             R.layout.new_pantry_item_dialog, null
         )
         etItemName = rootView.etNewItemName
-        Log.d("type", "onCreate selI dial" + rootView.etNewItemName.toString())
-       // etItemQuantity = rootView.etNewItemQuant
-      //  spinnerUnit = rootView.spinnerUnit
-       // Log.d("type", "onCreate selI dial" + rootView.spinnerType)
-       // spinnerType = rootView.spinnerType
+
+
         builder.setView(rootView)
         Log.d("type", "onCreate selI dial editText" + etItemName.getText().toString())
 
-        //isEditMode = ((arguments != null) && arguments!!.containsKey(ListActivity.KEY_ITEM))
-        /**
-        if (isEditMode) {
-            builder.setTitle(getString(R.string.edit_item_title))
-            var item = (arguments?.getSerializable(ListActivity.KEY_ITEM) as ShoppingItem)
 
-            etItemName.setText(item.itemName)
-            etItemDescription.setText(item.description)
-            etItemPrice.setText(item.price.toString())
-            spinnerType.setSelection(item.type)
-
-
-        }
-        **/
 
         builder.setPositiveButton("Add") {
                 dialog, which -> // empty
@@ -93,12 +67,7 @@ class NewPantryItemDialog : DialogFragment() {
         val positiveButton = (dialog as AlertDialog).getButton(Dialog.BUTTON_POSITIVE)
         positiveButton.setOnClickListener{
             if (etItemName.text.isNotEmpty()) {
-                //if (isEditMode){
-                //    handleItemEdit()
-                //}
-                //else{
                 handleItemCreate()
-                //}
                 dialog!!.dismiss()
             } else {
                 etItemName.error = getString(R.string.no_empty)
@@ -107,7 +76,6 @@ class NewPantryItemDialog : DialogFragment() {
     }
 
     private fun handleItemCreate() {
-      //  Log.d("type","dialog "+ spinnerType.selectedItemPosition)
         itemHandler.itemCreated(
             Ingredient(
                 etItemName.text.toString(),
@@ -118,17 +86,4 @@ class NewPantryItemDialog : DialogFragment() {
             )
         )
     }
-    /**
-    private fun handleItemEdit() {
-        val itemToEdit = arguments?.getSerializable(
-            ListActivity.KEY_ITEM
-        ) as ShoppingItem
-        itemToEdit.itemName = etItemName.text.toString()
-        itemToEdit.description = etItemDescription.text.toString()
-        itemToEdit.price = etItemPrice.text.toString().toInt()
-        itemToEdit.type = spinnerType.selectedItemPosition
-
-        itemHandler.itemUpdated(itemToEdit)
-    }
-    **/
 }

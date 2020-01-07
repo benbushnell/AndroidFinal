@@ -1,7 +1,7 @@
 package hu.ait.androidfinal.fragments
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,18 +15,13 @@ import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
-import hu.ait.androidfinal.MainActivity
-import hu.ait.androidfinal.R
+import hu.ait.androidfinal.*
 import hu.ait.androidfinal.adapter.PantryAdapter
-import hu.ait.androidfinal.api.RecipeAPI
 import hu.ait.androidfinal.data.Ingredient
 import hu.ait.androidfinal.data.PantryRepository
 import hu.ait.androidfinal.data.RecipeAPIRepo
-import hu.ait.androidfinal.fragments.NewPantryItemDialog.Companion.TAG_ITEM_DIALOG
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
-import kotlinx.android.synthetic.main.favorites_fragment.*
 import kotlinx.android.synthetic.main.pantry_fragment.*
-import kotlinx.android.synthetic.main.pantry_list_item.*
 import java.io.Serializable
 
 class PantryFragment : Fragment() {
@@ -39,26 +34,21 @@ class PantryFragment : Fragment() {
     private lateinit var viewModel: RecipeViewModel
     lateinit var pantryAdapter: PantryAdapter
     val pantryRepository = PantryRepository()
-    var includedItems : MutableList<Ingredient> = mutableListOf()
+    var includedItems : MutableList<String> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView =  inflater.inflate(R.layout.pantry_fragment, container, false)
-        return rootView
+        return inflater.inflate(R.layout.pantry_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
         pantryAdapter = PantryAdapter(activity!!)
-        val fm = fragmentManager
         recyclerPantry.adapter = pantryAdapter
         recyclerPantry.layoutManager = LinearLayoutManager(activity)
-        //viewModel.getPantryItems().observe(viewLifecycleOwner, Observer {savedPantryItem -> pantryAdapter.replaceItems(savedPantryItem.toMutableList())
-        //})
-        Log.d("observe", viewModel.getPantryItems().hasActiveObservers().toString())
         recyclerPantry.layoutManager = GridLayoutManager(activity, 2)
         recyclerPantry.itemAnimator = SlideInLeftAnimator()
         var allPostsListener = pantryRepository.getPantryItems().addSnapshotListener(
@@ -66,26 +56,29 @@ class PantryFragment : Fragment() {
                 override fun onEvent(querySnapshot: QuerySnapshot?, e: FirebaseFirestoreException?) {
 
                     if (e != null) {
-                        Toast.makeText(activity, "listen error: ${e.message}", Toast.LENGTH_LONG).show()
                         return
                     }
-                    for (dc in querySnapshot!!.getDocumentChanges()) {
-                        when (dc.getType()) {
+                    for (dc in querySnapshot!!.documentChanges) {
+                        when (dc.type) {
                             DocumentChange.Type.ADDED -> {
                                 val item = dc.document.toObject(Ingredient::class.java)
                                 pantryAdapter.addItem(item)
-                                if(item.include){
-                                    includedItems.add(item)
+                                if(item.include && !(item.name in includedItems)){
+                                    includedItems.add(item.name!!)
                                 }
                             }
                             DocumentChange.Type.MODIFIED -> {
                                 val item = dc.document.toObject(Ingredient::class.java)
-                                if (item in includedItems && !item.include) includedItems.remove(item)
-                                Toast.makeText(activity, "update: ", Toast.LENGTH_LONG).show()
+
+                                if (item.name in includedItems && !item.include) {
+                                    includedItems.remove(item.name)
+                                } else {
+                                    includedItems.add(item.name!!)
+                                }
                             }
                             DocumentChange.Type.REMOVED -> {
                                 val item = dc.document.toObject(Ingredient::class.java)
-                                if (item in includedItems) includedItems.remove(item)
+                                if (item.name in includedItems) includedItems.remove(item.name)
                             }
                         }
                     }
@@ -104,11 +97,15 @@ class PantryFragment : Fragment() {
                 viewModel.getIncludedString(includedItems)
             ).observe(viewLifecycleOwner, Observer {base ->
                 var meals = base.meals
-                var bundle = Bundle()
-                bundle.putSerializable("TOP_TEN", meals as Serializable)
-                (context as MainActivity).showFragmentByTag(SearchResultsFragment.TAG, true, bundle)
+                if(meals.isNullOrEmpty()){
+                    Toast.makeText(context, getString(R.string.no_results), Toast.LENGTH_SHORT).show()
+                } else {
+                    val intent = Intent()
+                    intent.setClass(context as MainActivity, SearchResultsActivity::class.java)
+                    intent.putExtra("meals", meals as Serializable)
+                    this.startActivity(intent)
+                }
             })
-
         }
     }
 

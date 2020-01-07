@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".RecipeDetailsActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -21,8 +22,9 @@
         android:id="@+id/tvDetailsName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#B3000000"
-        android:text="TextView"
+        android:background="#B3011936"
+        android:text="@string/details"
+        android:textAlignment="viewStart"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -31,7 +33,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:orientation="vertical"
@@ -41,68 +43,83 @@
 
 
         <ScrollView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="200dp"
             android:scrollbars="vertical">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
                     android:text="Ingredients:"
                     android:textAlignment="viewStart"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerIngredients"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="5dp"
+                    android:scrollbars="vertical"
                     app:fastScrollEnabled="false"
-                    android:scrollbars="vertical" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
 
                 <TextView
+                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:text="Directions: "
+                    android:text="@string/directions_activity_recipe_details"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerIngredients" />
 
                 <TextView
                     android:id="@+id/tvDirections"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="200dp"
-                    android:text="Scroll" />
+                    android:paddingLeft="5dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="100dp"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-            </LinearLayout>
+                <com.varunest.sparkbutton.SparkButton
+                    android:id="@+id/ivFavicon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:sparkbutton_activeImage="@drawable/starfilled"
+                    app:sparkbutton_iconSize="30dp"
+                    app:sparkbutton_inActiveImage="@drawable/starunfilled"
+                    app:sparkbutton_primaryColor="@color/star2"
+                    app:sparkbutton_secondaryColor="@color/star1" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
 
     </LinearLayout>
-
-    <com.varunest.sparkbutton.SparkButton
-        android:id="@+id/ivFavicon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:sparkbutton_activeImage="@drawable/starfilled"
-        app:sparkbutton_iconSize="30dp"
-        app:sparkbutton_inActiveImage="@drawable/starunfilled"
-        app:sparkbutton_primaryColor="@color/star2"
-        app:sparkbutton_secondaryColor="@color/star1" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

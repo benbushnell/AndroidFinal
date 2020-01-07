@@ -1,17 +1,10 @@
-package hu.ait.androidfinal.fragments
+package hu.ait.androidfinal
 
 import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.*
-import hu.ait.androidfinal.api.RecipeAPI
 import hu.ait.androidfinal.data.*
-import kotlinx.android.synthetic.main.favorites_fragment.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class RecipeViewModel : ViewModel() {
 
@@ -20,10 +13,7 @@ class RecipeViewModel : ViewModel() {
     }
     private var favoritesRepository = FavoritesRepository()
     private var pantryRepository = PantryRepository()
-    private var recipeApiRepo = RecipeAPIRepo()
     private val savedFavorites : MutableLiveData<List<Meal>> = MutableLiveData()
-    private val savedPantryItems : MutableLiveData<List<Ingredient>> = MutableLiveData()
-    private val searchResults : MutableLiveData<Base> = MutableLiveData()
 
 
     // save favorite to firebase
@@ -34,7 +24,7 @@ class RecipeViewModel : ViewModel() {
     }
 
     // get realtime updates from firebase regarding saved favorites
-    fun getSavedFavorites(): LiveData<List<Meal>>{
+    fun getSavedFavorites(): MutableLiveData<List<Meal>>{
         favoritesRepository.getSavedFavorites().addSnapshotListener(EventListener<QuerySnapshot> { value, e ->
             if (e != null) {
                 Log.w(TAG, "Listen failed.", e)
@@ -42,12 +32,13 @@ class RecipeViewModel : ViewModel() {
                 return@EventListener
             }
 
-            var savedFavoritesList : MutableList<Meal> = mutableListOf()
+            val savedFavoritesList : MutableList<Meal> = mutableListOf()
             for (doc in value!!) {
-                var favoriteItem = doc.toObject(Meal::class.java)
+                val favoriteItem = doc.toObject(Meal::class.java)
                 savedFavoritesList.add(favoriteItem)
             }
             savedFavorites.value = savedFavoritesList
+
         })
 
         return savedFavorites
@@ -75,7 +66,7 @@ class RecipeViewModel : ViewModel() {
             ingredientList.add(recipe.strIngredient19)
             amountList.add(recipe.strMeasure19!!)
         }
-        if (!(recipe.strIngredient18!!.isNullOrBlank())) {
+        if (!(recipe.strIngredient18.isNullOrBlank())) {
             ingredientList.add(recipe.strIngredient18)
             amountList.add(recipe.strMeasure18!!)
         }
@@ -152,46 +143,20 @@ class RecipeViewModel : ViewModel() {
 
     }
 
-    fun getPantryItems() : LiveData<List<Ingredient>>{
-        var savedPantryList : MutableList<Ingredient> = mutableListOf()
-        pantryRepository.getPantryItems().addSnapshotListener(EventListener<QuerySnapshot> {value, e ->
-            if (e != null) {
-                Log.w(TAG, "Listen failed.", e)
-                savedPantryItems.value = null
-                return@EventListener
-            }
-
-            for (doc in value!!) {
-                var pantryItem = doc.toObject(Ingredient::class.java)
-                savedPantryList.add(pantryItem)
-            }
-            savedPantryItems.value = savedPantryList
-        })
-
-        return savedPantryItems
-    }
-
     fun updateIsChecked(item: Ingredient){
         pantryRepository.updateIsChecked(item).addOnFailureListener {
             Log.d(TAG, "Failed to Update Include")
-        }.addOnSuccessListener {
-            Log.d("check", "Update success")
         }
     }
 
 
-    fun getIncludedString(includedList : MutableList<Ingredient>) : String {
-        var formattedList : MutableList<String> = mutableListOf()
+    fun getIncludedString(includedList : MutableList<String>) : String {
+        val formattedList : MutableList<String> = mutableListOf()
         for (item in includedList){
-            var name = item.name!!.replace(" ", "_")
+            val name = item.replace(" ", "_")
             formattedList.add(name)
         }
-        Log.d("stringish", formattedList.joinToString(","))
         return formattedList.joinToString(",")
     }
-
-    fun searchByIngredients(searchString : String) {
-    }
-
 }
 

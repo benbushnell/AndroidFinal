@@ -1,36 +1,28 @@
 package hu.ait.androidfinal.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import hu.ait.androidfinal.R
 import hu.ait.androidfinal.data.Ingredient
-import hu.ait.androidfinal.data.Meal
 import hu.ait.androidfinal.data.PantryRepository
-import hu.ait.androidfinal.fragments.RecipeViewModel
+import hu.ait.androidfinal.RecipeViewModel
 import kotlinx.android.synthetic.main.pantry_list_item.view.*
-import kotlinx.android.synthetic.main.recipe_list_item.view.*
 
 class PantryAdapter(context: Context) : RecyclerView.Adapter<PantryAdapter.ViewHolder>() {
     val context = context
-    var pantryList = mutableListOf<Ingredient>()
-    val viewModel = RecipeViewModel()
-    val checkedList = mutableListOf<Ingredient>()
-    val pantryRepository = PantryRepository()
+    private var pantryList = mutableListOf<Ingredient>()
+    private val viewModel = RecipeViewModel()
+    private val checkedList = mutableListOf<Ingredient>()
+    private val pantryRepository = PantryRepository()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PantryAdapter.ViewHolder {
         val ingredientCard = LayoutInflater.from(context).inflate(
             R.layout.pantry_list_item, parent, false
         )
-
         return ViewHolder(ingredientCard)
-    }
-
-    override fun getItemCount(): Int {
-        return pantryList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -40,7 +32,7 @@ class PantryAdapter(context: Context) : RecyclerView.Adapter<PantryAdapter.ViewH
         holder.cbInclude.isChecked = pantryItem.include
 
 
-        holder.cbInclude.setOnCheckedChangeListener { buttonView, isChecked ->
+        holder.cbInclude.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked){
                 pantryItem.include = true
                 checkedList.add(pantryItem)
@@ -58,37 +50,28 @@ class PantryAdapter(context: Context) : RecyclerView.Adapter<PantryAdapter.ViewH
             pantryRepository.deletePantryItem(pantryItem)
         }
 
-        //holder.tvPantryQuant.text = (pantryItem.quantity + " " + pantryItem.unit)
-        //holder.tvType.text = spinnerTypeMap(pantryItem.type)
-       // Log.d("type", pantryItem.type.toString())
-    }
-
-    fun spinnerTypeMap(position: Int): String{
-        when (position){
-            0 -> return "None"
-            1 -> return "Protein"
-            2 -> return "Carb"
-            3 -> return "Vegetable"
-            4 -> return "Staple"
-            else -> return "Fruit"
-        }
-    }
-
-    fun replaceItems(pantry: MutableList<Ingredient>) {
-        this.pantryList = pantry
-        notifyDataSetChanged()
     }
 
     fun addItem(item: Ingredient){
-        pantryList.add(item)
-        notifyItemInserted(pantryList.lastIndex)
+        var existing = false
+        for(i in 0 until pantryList.size-1){
+            if (item.name == pantryList[i].name){
+                existing = true
+            }
+        }
+        if (!existing) {
+            pantryList.add(item)
+            notifyItemInserted(pantryList.lastIndex)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return pantryList.size
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val tvPantryIngredient = itemView.tvPantryIngredient
         val cbInclude = itemView.cbInclude
         val icDelete = itemView.icDelete
-      //  val tvPantryQuant = itemView.tvPantryQuant
-      //  val tvType = itemView.tvType
     }
 }

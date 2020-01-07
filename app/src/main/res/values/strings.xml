@@ -1,9 +1,19 @@
 <resources>
-    <string name="app_name">AndroidFinal</string>
+    <string name="app_name">HomeCook</string>
     <string name="ingredient">Ingredient</string>
     <string name="quant">Quant</string>
     <string name="no_empty">This field cannot be empty</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="directions_activity_recipe_details">Directions:</string>
+    <string name="no_results">No Results</string>
+    <string name="gso_failed">Google Sign In Failed</string>
+    <string name="auth_failed">Authentication Failed.</string>
+    <string name="search_results_title">Search Results</string>
+    <string name="details">Details</string>
+    <string name="ingredient_name">Ingredient Name</string>
+    <string name="name">Name:</string>
+    <string name="quantity">Quantity:</string>
+    <string name="add_item">Add Item</string>
+    <string name="search">Search</string>
+    <string name="recipe_placeholder">Recipe Placeholder</string>
 </resources>

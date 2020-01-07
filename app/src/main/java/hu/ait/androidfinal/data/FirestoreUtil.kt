@@ -29,10 +29,4 @@ object FirestoreUtil {
             }
         }
     }
-    /*fun getCurrentUser(onComplete : (User) -> Unit) {
-        currentUserDocRef.get()
-            .addOnSuccessListener {
-                onComplete(it.toObject(User!!::class.java))
-            }
-    }*/
 }
